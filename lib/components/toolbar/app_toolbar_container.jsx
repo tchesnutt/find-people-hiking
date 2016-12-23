@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import Toolbar from './toolbar';
+import AppToolbar from './app_toolbar';
+import { openUploadModal } from '../../actions/modal_actions';
 
 
 const mapStateToProps = (state) => ({
@@ -10,4 +11,4 @@ const mapDispatchToProps = dispatch => ({
   openUploadModal: () => dispatch(openUploadModal())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolBar)
+export default connect(mapStateToProps, mapDispatchToProps)(AppToolbar)

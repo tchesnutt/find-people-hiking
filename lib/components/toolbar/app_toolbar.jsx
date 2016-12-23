@@ -3,22 +3,25 @@ import { Toolbar, ToolbarGroup, FlatButton, RaisedButton, MuiThemeProvider, getM
 
 
 class appToolBar extends React.Component {
-  constructor(){
-    this.false = false
+  constructor(props){
+    super(props)
+  }
+
+  handleClick(){
+    console.log("hi")
+    this.props.openUploadModal()
   }
 
   render(){
-    if(this.false){
-
-    } else {
+    return(
       <section className='toolbar'>
-        <ToolBar style={navebarStyle}>
+        <Toolbar>
           <ToolbarGroup>
-            <RaisedButton label='Upload Path'/>
+            <RaisedButton label='Upload Path' onClick={this.handleClick()}/>
           </ToolbarGroup>
-        </ToolBar>
+        </Toolbar>
       </section>
-    }
+    )
   }
 }
 export default appToolBar;
