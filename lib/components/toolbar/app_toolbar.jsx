@@ -1,15 +1,16 @@
 import React from 'react';
+import UploadModal from './upload_modal_container'
 import { Toolbar, ToolbarGroup, FlatButton, RaisedButton, MuiThemeProvider, getMuiTheme } from 'material-ui';
 
 
-class appToolBar extends React.Component {
+class AppToolBar extends React.Component {
   constructor(props){
     super(props)
   }
 
   handleClick(){
     console.log("hi")
-    this.props.openUploadModal()
+    this.props.openUploadModal
   }
 
   render(){
@@ -17,11 +18,12 @@ class appToolBar extends React.Component {
       <section className='toolbar'>
         <Toolbar>
           <ToolbarGroup>
-            <RaisedButton label='Upload Path' onClick={this.handleClick()}/>
+            <RaisedButton label='Upload Path' onClick={this.props.openUploadModal}/>
           </ToolbarGroup>
         </Toolbar>
+        <UploadModal/>
       </section>
     )
   }
 }
-export default appToolBar;
+export default AppToolBar;

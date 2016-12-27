@@ -9,7 +9,7 @@ class UploadModal extends React.Component {
   }
 
   handleDefaultPath(){
-    var defaultPath = require('../../../package.json');
+    var defaultPath = require('../../../pct-data.json');
     this.props.addPath({path: defaultPath});
   }
 
@@ -19,14 +19,15 @@ class UploadModal extends React.Component {
 
   render(){
     return(
-      <Dialog>
+      <Dialog open={this.props.uploadModal} onRequestClose={this.props.closeUploadModal}>
         <Dropzone onDrop={this.onDrop}>
           <div>Drop your JSON file here</div>
         </Dropzone>
-        <RaisedButton label='Use Default' onTouchTap={handleDefaultPath()}/>
-        <RaisedButton label='Close' onTouchTap={this.props.closeUploadModal()}/>
+        <RaisedButton label='Use Default' onTouchTap={this.handleDefaultPath}/>
+        <RaisedButton label='Close' onTouchTap={this.props.closeUploadModal}/>
       </Dialog>
     )
   }
 
 }
+export default UploadModal;
