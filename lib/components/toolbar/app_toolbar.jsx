@@ -8,11 +8,6 @@ class AppToolBar extends React.Component {
     super(props)
   }
 
-  handleClick(){
-    console.log("hi")
-    this.props.openUploadModal
-  }
-
   render(){
     return(
       <section className='toolbar'>
