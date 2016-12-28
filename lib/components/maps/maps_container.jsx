@@ -3,9 +3,10 @@ import Maps from './maps';
 
 
 
-const mapStateToProps = (state) => ({
-  path: state.coordinates
-});
+const mapStateToProps = (state) => {
+  return({
+  path: state.path.coordinates
+})};
 
 const mapDispatchToProps = dispatch => ({
 

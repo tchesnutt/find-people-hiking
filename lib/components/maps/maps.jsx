@@ -12,12 +12,12 @@ class Maps extends React.Component {
           lng: point[1]
         }})
       )
-    } else {
-      this.state.markers.push({position:{
-        lat: 25,
-        lng: 31
-      }})
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({markers: nextProps.path})
   }
 
 
@@ -25,8 +25,8 @@ class Maps extends React.Component {
     const GettingGoogleMap = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        defaultZoom={3}
-        defaultCenter={{ lat: 25, lng: 31 }}
+        defaultZoom={4}
+        defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
         onClick={props.onMapClick}>
         {this.state.markers.map((marker, index) => (
           <Marker
@@ -36,7 +36,6 @@ class Maps extends React.Component {
         ))}
       </GoogleMap>
     ));
-    console.log(this.state);
     return (
       <div style={{height: `100%`,
                    width: `50%`}}>

@@ -4,7 +4,7 @@ import DataTable from './data_table';
 
 
 const mapStateToProps = (state) => ({
-  path: state.coordinates
+  path: state.path.coordinates
 });
 
 const mapDispatchToProps = dispatch => ({
