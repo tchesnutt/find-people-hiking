@@ -30,7 +30,6 @@ class UploadModal extends React.Component {
           points.push({position :{lat: el[1], lng: el[2]}, id: i, selected: false})
         ));
         this.props.addPath(points);
-
       }
     ))(f)
     reader.readAsText(files[0])

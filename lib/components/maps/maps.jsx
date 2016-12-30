@@ -26,21 +26,24 @@ class Maps extends React.Component {
       lng: parseInt(this.state.line[1].position.lng)
     };
     let line = [this.state.line[0].position, this.state.line[1].position];
+    let path = [];
+    this.state.markers.forEach( el => {
+      path.push(el.position)
+    })
     const GettingGoogleMap = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        defaultZoom={4}
+        defaultZoom={7}
         defaultCenter={center}
         onClick={props.onMapClick}>
         <Marker {...this.state.line[0]} key='user' label='Dad'/>
-        {this.state.markers.map((marker, index) => (
-          <Marker
-            {...marker}
-            key={index}
-            onRightClick={() => props.onMarkerRightClick(index)}/>
-        ))}
+        <Marker {...this.state.line[1]} key='point'/>
         <Polyline path={line}
+          strokeColor='#FF0000'
           strokeOpacity='.5'/>
+        <Polyline path={path}
+          strokeColor='#FF0000'
+          strokeOpacity='.2'/>
       </GoogleMap>
     ));
     return (

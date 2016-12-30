@@ -109248,24 +109248,26 @@
 	        lng: parseInt(this.state.line[1].position.lng)
 	      };
 	      var line = [this.state.line[0].position, this.state.line[1].position];
+	      var path = [];
+	      this.state.markers.forEach(function (el) {
+	        path.push(el.position);
+	      });
 	      var GettingGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
 	        return _react2.default.createElement(
 	          _reactGoogleMaps.GoogleMap,
 	          {
 	            ref: props.onMapLoad,
-	            defaultZoom: 4,
+	            defaultZoom: 7,
 	            defaultCenter: center,
 	            onClick: props.onMapClick },
 	          _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[0], { key: 'user', label: 'Dad' })),
-	          _this2.state.markers.map(function (marker, index) {
-	            return _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, marker, {
-	              key: index,
-	              onRightClick: function onRightClick() {
-	                return props.onMarkerRightClick(index);
-	              } }));
-	          }),
+	          _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[1], { key: 'point' })),
 	          _react2.default.createElement(_reactGoogleMaps.Polyline, { path: line,
-	            strokeOpacity: '.5' })
+	            strokeColor: '#FF0000',
+	            strokeOpacity: '.5' }),
+	          _react2.default.createElement(_reactGoogleMaps.Polyline, { path: path,
+	            strokeColor: '#FF0000',
+	            strokeOpacity: '.2' })
 	        );
 	      });
 	      return _react2.default.createElement(
