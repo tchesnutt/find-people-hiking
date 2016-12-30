@@ -39727,7 +39727,7 @@
 	
 	var _defaultState = {
 	  coordinates: false,
-	  line: [{}, { position: { lat: 37.0902, lng: -95.7129 } }],
+	  line: [{}, { position: { lat: 32.0902, lng: -113.7129 } }],
 	  dist: false
 	};
 	
@@ -109223,7 +109223,7 @@
 	
 	    _this.state = {
 	      markers: [],
-	      line: [{}, { position: { lat: 37.0902, lng: -95.7129 } }],
+	      line: [{}, { position: { lat: 32.0902, lng: -113.7129 } }],
 	      dist: 0
 	    };
 	    return _this;
