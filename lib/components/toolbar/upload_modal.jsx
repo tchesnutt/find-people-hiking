@@ -20,15 +20,20 @@ class UploadModal extends React.Component {
   }
 
   onDrop(files){
-    console.log(files);
+    let f = files[0];
     var reader = new FileReader();
-    var markers = [];
-    reader.readAsArrayBuffer(files[0])
-    console.log(reader);
-    file.forEach( (el, i) => (
-      markers.push({position :{lat: el[1], lng: el[2]}, id: i, selected: false})
-    ));
-    this.props.addPath(markers);
+    reader.onload = ((file) => (
+      e => {
+        let JsonObj = JSON.parse(e.target.result)
+        let points = [];
+        JsonObj.markers.forEach( (el, i) => (
+          points.push({position :{lat: el[1], lng: el[2]}, id: i, selected: false})
+        ));
+        this.props.addPath(points);
+
+      }
+    ))(f)
+    reader.readAsText(files[0])
   }
 
 
