@@ -118619,7 +118619,7 @@
 	            { className: 'haversine-options' },
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude') }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude") }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Closest Point', onTouchTap: this.findClosestPoint })
+	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Dad', onTouchTap: this.findClosestPoint })
 	          )
 	        );
 	      }

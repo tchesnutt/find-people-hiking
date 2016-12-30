@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TextField, RaisedButton, Dialog, FlatButton } from 'material-ui';
 
-
 class DataTable extends React.Component {
   constructor(props){
     super(props)

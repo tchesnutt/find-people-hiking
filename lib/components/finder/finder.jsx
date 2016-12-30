@@ -78,7 +78,7 @@ class Finder extends React.Component {
           <section className='haversine-options'>
             <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')}/>
             <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")}/>
-            <RaisedButton label='Find Closest Point' onTouchTap={this.findClosestPoint}/>
+            <RaisedButton label='Find Dad' onTouchTap={this.findClosestPoint}/>
           </section>
         </section>
       )
