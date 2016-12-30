@@ -1,39 +1,46 @@
 import React from 'react';
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker, Polyline } from 'react-google-maps';
 
 class Maps extends React.Component {
   constructor(props){
     super(props);
-    this.state = {markers: []};
-    if(props.path){
-      props.path.forEach(point =>
-        this.state.markers.push({position: {
-          lat: point[0],
-          lng: point[1]
-        }})
-      )
-    }
+    this.state = {
+      markers: [],
+      line: [{}, { position: {lat: 37.0902, lng: -95.7129} }],
+      dist: 0
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    this.setState({markers: nextProps.path})
+    this.setState({
+      markers: nextProps.path,
+      line: nextProps.line,
+      dist: nextProps.dist
+    })
   }
 
 
   render(){
+    let center = {
+      lat: parseInt(this.state.line[1].position.lat),
+      lng: parseInt(this.state.line[1].position.lng)
+    };
+    let line = [this.state.line[0].position, this.state.line[1].position];
     const GettingGoogleMap = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
         defaultZoom={4}
-        defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
+        defaultCenter={center}
         onClick={props.onMapClick}>
+        <Marker {...this.state.line[0]} key='user' label='Dad'/>
         {this.state.markers.map((marker, index) => (
           <Marker
             {...marker}
             key={index}
             onRightClick={() => props.onMarkerRightClick(index)}/>
         ))}
+        <Polyline path={line}
+          strokeOpacity='.5'/>
       </GoogleMap>
     ));
     return (
@@ -48,7 +55,6 @@ class Maps extends React.Component {
           }
           onMapLoad={this.handleMapLoad}
           onMapClick={this.handleMapClick}
-          markers={this.state.markers}
           onMarkerRightClick={this.handleMarkerRightClick}/>
       </div>
     )

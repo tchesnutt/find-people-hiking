@@ -3,13 +3,12 @@ import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import ToolBar from './toolbar/app_toolbar_container'
-import Maps from './maps/maps_container'
-import DataTable from './datatable/data_table_container'
+import ToolBar from './toolbar/app_toolbar_container';
+import Maps from './maps/maps_container';
+import DataTable from './datatable/data_table_container';
+import Finder from './finder/finder_container';
 
 const Root = ({store}) => {
-// ToolBar
-// Map / table data
   return (
     <Provider store={store}>
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
@@ -17,10 +16,13 @@ const Root = ({store}) => {
           <section className='top'>
             <ToolBar/>
           </section>
-          <section className='main-page'>
+          <secton className='main-page'>
             <Maps/>
-            <DataTable/>
-          </section>
+            <section className='right'>
+              <Finder/>
+              <DataTable/>
+            </section>
+          </secton>
       </section>
     </MuiThemeProvider>
     </Provider>
