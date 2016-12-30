@@ -118338,12 +118338,12 @@
 	        _react2.default.createElement(
 	          'section',
 	          { className: 'options-form' },
-	          _react2.default.createElement(_materialUi.RaisedButton, { label: 'Delete Selected', onTouchTap: this.handleDeleteSelected }),
+	          _react2.default.createElement(_materialUi.RaisedButton, { label: 'Delete Selected', onTouchTap: this.handleDeleteSelected, className: 'delete-button' }),
 	          _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleSelect, className: 'left-options' },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select points from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select To', defaultValue: this.end, floatingLabelText: 'Select points to', onChange: this.update("end"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select To', defaultValue: this.end, floatingLabelText: 'Select to', onChange: this.update("end"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Select', type: 'submit', primary: true })
 	          )
 	        ),
@@ -118588,8 +118588,8 @@
 	          _react2.default.createElement(
 	            'section',
 	            { className: 'haversine-options' },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude') }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude") }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Closest Point', onTouchTap: this.findClosestPoint })
 	          ),
 	          _react2.default.createElement(
@@ -118617,8 +118617,8 @@
 	          _react2.default.createElement(
 	            'section',
 	            { className: 'haversine-options' },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude') }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude") }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Dad', onTouchTap: this.findClosestPoint })
 	          )
 	        );

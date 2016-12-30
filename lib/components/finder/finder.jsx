@@ -63,8 +63,8 @@ class Finder extends React.Component {
       return(
         <section className='haversine'>
           <section className='haversine-options'>
-            <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')}/>
-            <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")}/>
+            <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
+            <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
             <RaisedButton label='Find Closest Point' onTouchTap={this.findClosestPoint}/>
           </section>
           <section className='text'>
@@ -76,8 +76,8 @@ class Finder extends React.Component {
       return(
         <section className='haversine'>
           <section className='haversine-options'>
-            <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')}/>
-            <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")}/>
+            <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
+            <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
             <RaisedButton label='Find Dad' onTouchTap={this.findClosestPoint}/>
           </section>
         </section>

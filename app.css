@@ -49,12 +49,12 @@
 .left-options {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: baseline;
 }
 
 .left-options-item-right {
-  width: 30px;
+  width: 30% !important;
 }
 
 .interal {

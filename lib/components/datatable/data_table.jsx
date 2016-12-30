@@ -140,10 +140,10 @@ class DataTable extends React.Component {
           </Dialog>
         </section>
         <section className='options-form'>
-          <RaisedButton label='Delete Selected' onTouchTap={this.handleDeleteSelected}/>
+          <RaisedButton label='Delete Selected' onTouchTap={this.handleDeleteSelected} className='delete-button'/>
           <form onSubmit={this.handleSelect} className='left-options'>
-            <TextField type='text' hintText='Select From' floatingLabelText='Select points from' defaultValue={this.start} onChange={this.update("start")} className='left-options-item-right'/>
-            <TextField type='text' hintText='Select To' defaultValue={this.end} floatingLabelText='Select points to' onChange={this.update("end")} className='left-options-item-right'/>
+            <TextField type='text' hintText='Select From' floatingLabelText='Select from' defaultValue={this.start} onChange={this.update("start")} className='left-options-item-right'/>
+            <TextField type='text' hintText='Select To' defaultValue={this.end} floatingLabelText='Select to' onChange={this.update("end")} className='left-options-item-right'/>
             <RaisedButton label='Select' type='submit' primary={true}/>
           </form>
         </section>
