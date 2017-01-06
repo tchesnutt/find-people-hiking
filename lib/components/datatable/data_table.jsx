@@ -49,8 +49,6 @@ class DataTable extends React.Component {
       if(i <= end && i >= start){
         let newEl;
         newEl = el;
-        newEl.id = i;
-        newEl.selected = false;
         this.state.view.push(newEl)
       }
     });
@@ -113,8 +111,8 @@ class DataTable extends React.Component {
     this.state.data.forEach( el => {
       if(el.id === this.toUpdateId){
         newData.push({
-          position: {lat: parseInt(this.latitude), lng: parseInt(this.longitude)},
-          id: parseInt(this.toUpdateId),
+          position: {lat: parseFloat(this.latitude), lng: parseFloat(this.longitude)},
+          id: parseFloat(this.toUpdateId),
           selected: false});
       } else {
         newData.push(el);
@@ -161,7 +159,7 @@ class DataTable extends React.Component {
               adjustForCheckbox={this.state.showCheckboxes}
               enableSelectAll={this.state.enableSelectAll}>
               <TableRow>
-                <TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
+                <TableHeaderColumn tooltip="The Mile">Mile Number</TableHeaderColumn>
                 <TableHeaderColumn tooltip="The Latitude">Latitude</TableHeaderColumn>
                 <TableHeaderColumn tooltip="The Longitude">Longitude</TableHeaderColumn>
                 <TableHeaderColumn tooltip="The Updater">        </TableHeaderColumn>

@@ -39735,9 +39735,12 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
 	  var action = arguments[1];
 	
+	  console.log(state);
+	  console.log(action);
 	  Object.freeze(state);
 	  switch (action.type) {
 	    case _path_actions.ADD_PATH:
+	      console.log(action.path);
 	      return (0, _lodash.merge)({}, state, { coordinates: action.path });
 	    case _path_actions.UPDATE_PATH:
 	      return (0, _lodash.merge)({}, state, { coordinates: action.path });
@@ -48758,7 +48761,7 @@
 	    value: function handleDefaultPath() {
 	      var markers = [];
 	      _pctData2.default.markers.forEach(function (el, i) {
-	        return markers.push({ position: { lat: el[1], lng: el[2] }, id: i, selected: false });
+	        return markers.push({ position: { lat: parseFloat(el[1]), lng: parseFloat(el[2]) }, id: parseFloat(el[0]), selected: false });
 	      });
 	      this.props.addPath(markers);
 	    }
@@ -48774,7 +48777,7 @@
 	          var JsonObj = JSON.parse(e.target.result);
 	          var points = [];
 	          JsonObj.markers.forEach(function (el, i) {
-	            return points.push({ position: { lat: el[1], lng: el[2] }, id: i, selected: false });
+	            return points.push({ position: { lat: parseFloat(el[1]), lng: parseFloat(el[2]) }, id: parseFloat(el[0]), selected: false });
 	          });
 	          _this2.props.addPath(points);
 	        };
@@ -118211,8 +118214,6 @@
 	        if (i <= end && i >= start) {
 	          var newEl = void 0;
 	          newEl = el;
-	          newEl.id = i;
-	          newEl.selected = false;
 	          _this2.state.view.push(newEl);
 	        }
 	      });
@@ -118300,8 +118301,8 @@
 	      this.state.data.forEach(function (el) {
 	        if (el.id === _this5.toUpdateId) {
 	          newData.push({
-	            position: { lat: parseInt(_this5.latitude), lng: parseInt(_this5.longitude) },
-	            id: parseInt(_this5.toUpdateId),
+	            position: { lat: parseFloat(_this5.latitude), lng: parseFloat(_this5.longitude) },
+	            id: parseFloat(_this5.toUpdateId),
 	            selected: false });
 	        } else {
 	          newData.push(el);
@@ -118371,8 +118372,8 @@
 	                null,
 	                _react2.default.createElement(
 	                  _materialUi.TableHeaderColumn,
-	                  { tooltip: 'The ID' },
-	                  'ID'
+	                  { tooltip: 'The Mile' },
+	                  'Mile Number'
 	                ),
 	                _react2.default.createElement(
 	                  _materialUi.TableHeaderColumn,

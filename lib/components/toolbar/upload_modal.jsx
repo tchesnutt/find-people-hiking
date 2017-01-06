@@ -14,7 +14,7 @@ class UploadModal extends React.Component {
   handleDefaultPath(){
     var markers = [];
     Pct.markers.forEach( (el, i) => (
-      markers.push({position :{lat: el[1], lng: el[2]}, id: i, selected: false})
+      markers.push({position :{lat: parseFloat(el[1]), lng: parseFloat(el[2])}, id: parseFloat(el[0]), selected: false})
     ))
     this.props.addPath(markers);
   }
@@ -27,7 +27,7 @@ class UploadModal extends React.Component {
         let JsonObj = JSON.parse(e.target.result)
         let points = [];
         JsonObj.markers.forEach( (el, i) => (
-          points.push({position :{lat: el[1], lng: el[2]}, id: i, selected: false})
+          points.push({position :{lat: parseFloat(el[1]), lng: parseFloat(el[2])}, id: parseFloat(el[0]), selected: false})
         ));
         this.props.addPath(points);
       }
