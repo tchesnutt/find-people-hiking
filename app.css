@@ -57,6 +57,11 @@
   width: 30% !important;
 }
 
+.update-textbox {
+  width: 25% !important;
+  margin-right: 5px;
+}
+
 .interal {
   display: flex;
   flex-direction: column;

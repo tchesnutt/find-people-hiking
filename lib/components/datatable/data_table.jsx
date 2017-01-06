@@ -8,7 +8,9 @@ class DataTable extends React.Component {
     this.end = 99;
     this.latitude = 0,
     this.longitude = 0,
+    this.mile = 0,
     this.toUpdateID = 0,
+    this.existingPoint = {lat: 0, lng: 0},
     this.state = {
       fixedHeader: true,
       fixedFooter: true,
@@ -92,17 +94,22 @@ class DataTable extends React.Component {
       return e => {this.latitude = e.currentTarget.value};
     } else if (field === "longitude"){
       return e => {this.longitude = e.currentTarget.value};
+    } else if (field === "mile"){
+      return e => {this.mile = e.currentTarget.value};
     }
   }
 
   closeModal(){
-    this.toUpdateID = 0;
+    this.toUpdateId = 0;
+    this.existingPoint = {lat: 0, lng: 0},
     this.setState({modal: false})
   }
 
-  openModal(id){
+  openModal(id, defPos){
     this.toUpdateId = id;
-    this.setState({modal: true})
+    this.existingPoint = defPos;
+    console.log(this.toUpdateId);
+    this.setState({modal: true});
   }
 
   handleUpdate(e){
@@ -131,8 +138,9 @@ class DataTable extends React.Component {
         <section className='update-point-modal'>
           <Dialog open={this.state.modal} onRequestClose={this.closeModal}>
             <form onSubmit={this.handleUpdate}>
-              <TextField type='text' hintText='Latitude' onChange={this.update("latitude")}/>
-              <TextField type='text' hintText='Longitude' onChange={this.update("longitude")}/>
+              <TextField type='text' className="update-textbox" floatingLabelText='Mile Number' defaultValue={this.toUpdateId} onChange={this.update("mile")}/>
+              <TextField type='text' className="update-textbox" floatingLabelText='Latitude' defaultValue={this.existingPoint.lat} onChange={this.update("latitude")}/>
+              <TextField type='text' className="update-textbox" floatingLabelText='Longitude' defaultValue={this.existingPoint.lng} onChange={this.update("longitude")}/>
               <RaisedButton label='Update' type='submit' primary={true}/>
             </form>
           </Dialog>
@@ -176,7 +184,7 @@ class DataTable extends React.Component {
                   <TableRowColumn>{row.position.lat}</TableRowColumn>
                   <TableRowColumn>{row.position.lng}</TableRowColumn>
                   <TableRowColumn>
-                    <FlatButton label='Update' onTouchTap={() => this.openModal(row.id)}/>
+                    <FlatButton label='Update' onTouchTap={() => this.openModal(row.id, row.position)}/>
                   </TableRowColumn>
                 </TableRow>
               ))}

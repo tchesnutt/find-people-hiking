@@ -118168,7 +118168,7 @@
 	
 	    _this.start = 0;
 	    _this.end = 99;
-	    _this.latitude = 0, _this.longitude = 0, _this.toUpdateID = 0, _this.state = {
+	    _this.latitude = 0, _this.longitude = 0, _this.mile = 0, _this.toUpdateID = 0, _this.existingPoint = { lat: 0, lng: 0 }, _this.state = {
 	      fixedHeader: true,
 	      fixedFooter: true,
 	      stripedRows: true,
@@ -118277,18 +118277,24 @@
 	        return function (e) {
 	          _this4.longitude = e.currentTarget.value;
 	        };
+	      } else if (field === "mile") {
+	        return function (e) {
+	          _this4.mile = e.currentTarget.value;
+	        };
 	      }
 	    }
 	  }, {
 	    key: 'closeModal',
 	    value: function closeModal() {
-	      this.toUpdateID = 0;
-	      this.setState({ modal: false });
+	      this.toUpdateId = 0;
+	      this.existingPoint = { lat: 0, lng: 0 }, this.setState({ modal: false });
 	    }
 	  }, {
 	    key: 'openModal',
-	    value: function openModal(id) {
+	    value: function openModal(id, defPos) {
 	      this.toUpdateId = id;
+	      this.existingPoint = defPos;
+	      console.log(this.toUpdateId);
 	      this.setState({ modal: true });
 	    }
 	  }, {
@@ -118330,8 +118336,9 @@
 	            _react2.default.createElement(
 	              'form',
 	              { onSubmit: this.handleUpdate },
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Latitude', onChange: this.update("latitude") }),
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Longitude', onChange: this.update("longitude") }),
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Mile Number', defaultValue: this.toUpdateId, onChange: this.update("mile") }),
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', defaultValue: this.existingPoint.lat, onChange: this.update("latitude") }),
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', defaultValue: this.existingPoint.lng, onChange: this.update("longitude") }),
 	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Update', type: 'submit', primary: true })
 	            )
 	          )
@@ -118422,7 +118429,7 @@
 	                    _materialUi.TableRowColumn,
 	                    null,
 	                    _react2.default.createElement(_materialUi.FlatButton, { label: 'Update', onTouchTap: function onTouchTap() {
-	                        return _this6.openModal(row.id);
+	                        return _this6.openModal(row.id, row.position);
 	                      } })
 	                  )
 	                );
