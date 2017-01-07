@@ -34,7 +34,7 @@ class Maps extends React.Component {
           </GoogleMap>
         );
       } else if((isLine === false) && (isPath === true)) {
-        let halfway = this.state.markers.length / 2
+        let halfway = Math.floor(this.state.markers.length / 2);
         let center = {
           lat: this.state.markers[halfway].position.lat,
           lng: this.state.markers[halfway].position.lng
@@ -57,6 +57,7 @@ class Maps extends React.Component {
           </GoogleMap>
         )
       } else if((isLine === true) && (isPath === true)) {
+        let halfway = Math.floor(this.state.markers.length / 2);
         let center = {
           lat: parseFloat(this.state.line[1].position.lat),
           lng: parseFloat(this.state.line[1].position.lng)

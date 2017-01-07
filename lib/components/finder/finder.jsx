@@ -25,7 +25,8 @@ class Finder extends React.Component {
     }
   }
 
-  findClosestPoint(){
+  findClosestPoint(e){
+    e.preventDefault();
     let dist;
     let closestPoint;
     this.props.path.forEach( el => {
@@ -62,11 +63,11 @@ class Finder extends React.Component {
     if (this.props.dist) {
       return(
         <section className='haversine'>
-          <section className='haversine-options'>
+          <form className='haversine-options' onSubmit={this.findClosestPoint}>
             <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
             <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
-            <RaisedButton label='Find Closest Point' onTouchTap={this.findClosestPoint}/>
-          </section>
+            <RaisedButton label='Find Closest Point' type='submit' primary={true}/>
+          </form>
           <section className='text'>
             <p>Your Dad is {this.props.dist.toFixed(2)} miles from {this.props.line[1].position.lat.toFixed(4)}, {this.props.line[1].position.lng.toFixed(4)} (Mile #: {this.props.line[1].id})</p>
           </section>
@@ -75,11 +76,11 @@ class Finder extends React.Component {
     } else {
       return(
         <section className='haversine'>
-          <section className='haversine-options'>
+          <form className='haversine-options' onSubmit={this.findClosestPoint}>
             <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
             <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
-            <RaisedButton label='Find Dad' onTouchTap={this.findClosestPoint}/>
-          </section>
+            <RaisedButton label='Find Dad' type='submit' primary={true}/>
+          </form>
         </section>
       )
     }

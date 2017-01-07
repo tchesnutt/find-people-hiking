@@ -39735,12 +39735,9 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
 	  var action = arguments[1];
 	
-	  console.log(state);
-	  console.log(action);
 	  Object.freeze(state);
 	  switch (action.type) {
 	    case _path_actions.ADD_PATH:
-	      console.log(action.path);
 	      return (0, _lodash.merge)({}, state, { coordinates: action.path });
 	    case _path_actions.UPDATE_PATH:
 	      return (0, _lodash.merge)({}, state, { coordinates: action.path });
@@ -109259,7 +109256,7 @@
 	            onClick: props.onMapClick });
 	        } else if (isLine === false && isPath === true) {
 	          var _ret = function () {
-	            var halfway = _this2.state.markers.length / 2;
+	            var halfway = Math.floor(_this2.state.markers.length / 2);
 	            var center = {
 	              lat: _this2.state.markers[halfway].position.lat,
 	              lng: _this2.state.markers[halfway].position.lng
@@ -109288,6 +109285,7 @@
 	          if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	        } else if (isLine === true && isPath === true) {
 	          var _ret2 = function () {
+	            var halfway = Math.floor(_this2.state.markers.length / 2);
 	            var center = {
 	              lat: parseFloat(_this2.state.line[1].position.lat),
 	              lng: parseFloat(_this2.state.line[1].position.lng)
@@ -118218,7 +118216,7 @@
 	
 	    _this.start = 0;
 	    _this.end = 99;
-	    _this.latitude = 0, _this.longitude = 0, _this.mile = 0, _this.toUpdateID = 0, _this.existingPoint = { lat: 0, lng: 0 }, _this.state = {
+	    _this.latitude = undefined, _this.longitude = undefined, _this.mile = undefined, _this.newLatitude = undefined, _this.newLongitude = undefined, _this.newMile = undefined, _this.idxUpdate = undefined, _this.existingMile = undefined, _this.existingPoint = { lat: undefined, lng: undefined }, _this.state = {
 	      fixedHeader: true,
 	      fixedFooter: true,
 	      stripedRows: true,
@@ -118246,6 +118244,7 @@
 	    _this.openModal = _this.openModal.bind(_this);
 	    _this.closeModal = _this.closeModal.bind(_this);
 	    _this.handleUpdate = _this.handleUpdate.bind(_this);
+	    _this.handleAddPoint = _this.handleAddPoint.bind(_this);
 	    return _this;
 	  }
 	
@@ -118331,44 +118330,98 @@
 	        return function (e) {
 	          _this4.mile = e.currentTarget.value;
 	        };
+	      } else if (field === "new latitude") {
+	        return function (e) {
+	          _this4.newLatitude = e.currentTarget.value;
+	        };
+	      } else if (field === "new longitude") {
+	        return function (e) {
+	          _this4.newLongitude = e.currentTarget.value;
+	        };
+	      } else if (field === "new mile") {
+	        return function (e) {
+	          _this4.newMile = e.currentTarget.value;
+	        };
 	      }
 	    }
 	  }, {
 	    key: 'closeModal',
 	    value: function closeModal() {
-	      this.toUpdateId = 0;
+	      this.idxUpdate = 0;
+	      this.existingMile = 0;
 	      this.existingPoint = { lat: 0, lng: 0 }, this.setState({ modal: false });
 	    }
 	  }, {
 	    key: 'openModal',
-	    value: function openModal(id, defPos) {
-	      this.toUpdateId = id;
+	    value: function openModal(index, id, defPos) {
+	      this.idxUpdate = index;
+	      this.existingMile = id;
 	      this.existingPoint = defPos;
 	      this.setState({ modal: true });
 	    }
 	  }, {
 	    key: 'handleUpdate',
 	    value: function handleUpdate(e) {
-	      var _this5 = this;
-	
 	      e.preventDefault();
-	      var newData = [];
-	      this.state.data.forEach(function (el) {
-	        if (el.id === _this5.toUpdateId) {
-	          newData.push({
-	            position: { lat: parseFloat(_this5.latitude), lng: parseFloat(_this5.longitude) },
-	            id: parseFloat(_this5.toUpdateId),
-	            selected: false });
-	        } else {
-	          newData.push(el);
-	        }
-	      });
+	      var newData = this.state.data;
+	      var upLat = void 0;
+	      var upLng = void 0;
+	      var upMile = void 0;
+	      this.latitude === undefined ? upLat = this.existingPoint.lat : upLat = this.latitude;
+	      this.longitude === undefined ? upLng = this.existingPoint.lng : upLng = this.longitude;
+	      this.mile === undefined ? upMile = this.existingMile : upMile = this.mile;
+	      var newPoint = {
+	        position: { lat: parseFloat(upLat), lng: parseFloat(upLng) },
+	        id: parseFloat(upMile),
+	        selected: false
+	      };
+	      newData[this.idxUpdate] = newPoint;
 	      this.props.updatePath(newData);
+	    }
+	  }, {
+	    key: 'handleAddPoint',
+	    value: function handleAddPoint(e) {
+	      e.preventDefault();
+	      var newPoint = {
+	        id: parseFloat(this.newMile),
+	        selected: false,
+	        position: {
+	          lat: parseFloat(this.newLatitude),
+	          lng: parseFloat(this.newLongitude)
+	        }
+	      };
+	      var newData = this.state.data;
+	      newData.splice(this.bsearch(newPoint.id), 0, newPoint);
+	      this.props.updatePath(newData);
+	    }
+	  }, {
+	    key: 'bsearch',
+	    value: function bsearch(newMile) {
+	      var data = this.state.data;
+	      var minIdx = 0;
+	      var maxIdx = data.length - 1;
+	      var currentIdx = void 0;
+	      var currentEl = void 0;
+	      if (newMile > data[maxIdx].id) {
+	        return maxIdx;
+	      }
+	      while (minIdx <= maxIdx) {
+	        currentIdx = (minIdx + maxIdx) / 2 | 0;
+	        currentEl = data[currentIdx];
+	        if (currentEl.id < newMile) {
+	          minIdx = currentIdx + 1;
+	        } else if (currentEl.id > newMile) {
+	          maxIdx = currentIdx - 1;
+	        } else {
+	          return currentIdx;
+	        }
+	      }
+	      return maxIdx + 1;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this6 = this;
+	      var _this5 = this;
 	
 	      if (this.state.data.length > 0) {
 	        this.grabView(this.state.start, this.state.end);
@@ -118385,7 +118438,7 @@
 	            _react2.default.createElement(
 	              'form',
 	              { onSubmit: this.handleUpdate },
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Mile Number', defaultValue: this.toUpdateId, onChange: this.update("mile") }),
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Mile Number', defaultValue: this.existingMile, onChange: this.update("mile") }),
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', defaultValue: this.existingPoint.lat, onChange: this.update("latitude") }),
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', defaultValue: this.existingPoint.lng, onChange: this.update("longitude") }),
 	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Update', type: 'submit', primary: true })
@@ -118402,6 +118455,18 @@
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select To', defaultValue: this.end, floatingLabelText: 'Select to', onChange: this.update("end"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Select', type: 'submit', primary: true })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'section',
+	          { className: 'options-form' },
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.handleAddPoint },
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Mile Number', onChange: this.update("new mile") }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', onChange: this.update("new latitude") }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', onChange: this.update("new longitude") }),
+	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Add Point', type: 'submit', primary: true })
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -118478,7 +118543,7 @@
 	                    _materialUi.TableRowColumn,
 	                    null,
 	                    _react2.default.createElement(_materialUi.FlatButton, { label: 'Update', onTouchTap: function onTouchTap() {
-	                        return _this6.openModal(row.id, row.position);
+	                        return _this5.openModal(index, row.id, row.position);
 	                      } })
 	                  )
 	                );
@@ -118601,9 +118666,10 @@
 	    }
 	  }, {
 	    key: 'findClosestPoint',
-	    value: function findClosestPoint() {
+	    value: function findClosestPoint(e) {
 	      var _this3 = this;
 	
+	      e.preventDefault();
 	      var dist = void 0;
 	      var closestPoint = void 0;
 	      this.props.path.forEach(function (el) {
@@ -118643,11 +118709,11 @@
 	          'section',
 	          { className: 'haversine' },
 	          _react2.default.createElement(
-	            'section',
-	            { className: 'haversine-options' },
+	            'form',
+	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Closest Point', onTouchTap: this.findClosestPoint })
+	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Closest Point', type: 'submit', primary: true })
 	          ),
 	          _react2.default.createElement(
 	            'section',
@@ -118672,11 +118738,11 @@
 	          'section',
 	          { className: 'haversine' },
 	          _react2.default.createElement(
-	            'section',
-	            { className: 'haversine-options' },
+	            'form',
+	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Dad', onTouchTap: this.findClosestPoint })
+	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Dad', type: 'submit', primary: true })
 	          )
 	        );
 	      }
