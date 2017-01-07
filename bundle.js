@@ -39727,7 +39727,7 @@
 	
 	var _defaultState = {
 	  coordinates: false,
-	  line: [{}, { position: { lat: 32.0902, lng: -113.7129 } }],
+	  line: [{}, {}],
 	  dist: false
 	};
 	
@@ -109198,6 +109198,8 @@
 	  value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -109226,7 +109228,7 @@
 	
 	    _this.state = {
 	      markers: [],
-	      line: [{}, { position: { lat: 32.0902, lng: -113.7129 } }],
+	      line: [{}, {}],
 	      dist: 0
 	    };
 	    return _this;
@@ -109246,32 +109248,80 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var center = {
-	        lat: parseInt(this.state.line[1].position.lat),
-	        lng: parseInt(this.state.line[1].position.lng)
-	      };
-	      var line = [this.state.line[0].position, this.state.line[1].position];
-	      var path = [];
-	      this.state.markers.forEach(function (el) {
-	        path.push(el.position);
-	      });
 	      var GettingGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
-	        return _react2.default.createElement(
-	          _reactGoogleMaps.GoogleMap,
-	          {
+	        var isLine = !(_this2.state.line[0].position === undefined);
+	        var isPath = !(_this2.state.markers.length === 0);
+	        if (isLine === false && isPath === false) {
+	          return _react2.default.createElement(_reactGoogleMaps.GoogleMap, {
 	            ref: props.onMapLoad,
-	            defaultZoom: 7,
-	            defaultCenter: center,
-	            onClick: props.onMapClick },
-	          _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[0], { key: 'user', label: 'Dad' })),
-	          _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[1], { key: 'point' })),
-	          _react2.default.createElement(_reactGoogleMaps.Polyline, { path: line,
-	            strokeColor: '#FF0000',
-	            strokeOpacity: '.5' }),
-	          _react2.default.createElement(_reactGoogleMaps.Polyline, { path: path,
-	            strokeColor: '#FF0000',
-	            strokeOpacity: '.2' })
-	        );
+	            defaultZoom: 4,
+	            defaultCenter: { lat: 37.0902, lng: -95.7129 },
+	            onClick: props.onMapClick });
+	        } else if (isLine === false && isPath === true) {
+	          var _ret = function () {
+	            var halfway = _this2.state.markers.length / 2;
+	            var center = {
+	              lat: _this2.state.markers[halfway].position.lat,
+	              lng: _this2.state.markers[halfway].position.lng
+	            };
+	            var path = [];
+	            _this2.state.markers.forEach(function (el) {
+	              path.push(el.position);
+	            });
+	            return {
+	              v: _react2.default.createElement(
+	                _reactGoogleMaps.GoogleMap,
+	                {
+	                  ref: props.onMapLoad,
+	                  defaultZoom: 5,
+	                  defaultCenter: center,
+	                  onClick: props.onMapClick },
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.markers[0], { key: 'start', label: 'Start' })),
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.markers[_this2.state.markers.length - 1], { key: 'end', label: 'End' })),
+	                _react2.default.createElement(_reactGoogleMaps.Polyline, { path: path,
+	                  options: { strokeColor: '#FF0000',
+	                    strokeOpacity: '.7' } })
+	              )
+	            };
+	          }();
+	
+	          if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	        } else if (isLine === true && isPath === true) {
+	          var _ret2 = function () {
+	            var center = {
+	              lat: parseFloat(_this2.state.line[1].position.lat),
+	              lng: parseFloat(_this2.state.line[1].position.lng)
+	            };
+	            var line = [_this2.state.line[0].position, _this2.state.line[1].position];
+	            var path = [];
+	            _this2.state.markers.forEach(function (el) {
+	              path.push(el.position);
+	            });
+	            return {
+	              v: _react2.default.createElement(
+	                _reactGoogleMaps.GoogleMap,
+	                {
+	                  ref: props.onMapLoad,
+	                  defaultZoom: 7,
+	                  defaultCenter: center,
+	                  onClick: props.onMapClick },
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.markers[0], { key: 'start', label: 'Start' })),
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.markers[_this2.state.markers.length - 1], { key: 'end', label: 'End' })),
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[0], { key: 'user', label: 'Dad' })),
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[1], { key: 'point', label: _this2.state.line[1].id.toString() })),
+	                _react2.default.createElement(_reactGoogleMaps.Polyline, { path: line,
+	                  options: { strokeColor: '#000000',
+	                    strokeOpacity: '1',
+	                    strokeWeight: '0.7' } }),
+	                _react2.default.createElement(_reactGoogleMaps.Polyline, { path: path,
+	                  options: { strokeColor: '#FF0000',
+	                    strokeOpacity: '.7' } })
+	              )
+	            };
+	          }();
+	
+	          if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+	        }
 	      });
 	      return _react2.default.createElement(
 	        'div',
@@ -118294,7 +118344,6 @@
 	    value: function openModal(id, defPos) {
 	      this.toUpdateId = id;
 	      this.existingPoint = defPos;
-	      console.log(this.toUpdateId);
 	      this.setState({ modal: true });
 	    }
 	  }, {
@@ -118562,7 +118611,7 @@
 	          latitude: el.position.lat,
 	          longitude: el.position.lng
 	        };
-	        var result = (0, _haversine2.default)(_this3.start, end);
+	        var result = (0, _haversine2.default)(_this3.start, end, { unit: 'mile' });
 	        if (dist === undefined) {
 	          dist = result;
 	          closestPoint = el;
@@ -118574,8 +118623,8 @@
 	      var lineR = [];
 	      var begin = {
 	        position: {
-	          lat: parseInt(this.start.latitude),
-	          lng: parseInt(this.start.longitude)
+	          lat: parseFloat(this.start.latitude),
+	          lng: parseFloat(this.start.longitude)
 	        }
 	      };
 	      lineR.push(begin);
@@ -118608,11 +118657,11 @@
 	              null,
 	              'Your Dad is ',
 	              this.props.dist.toFixed(2),
-	              ' km from ',
+	              ' miles from ',
 	              this.props.line[1].position.lat.toFixed(4),
 	              ', ',
 	              this.props.line[1].position.lng.toFixed(4),
-	              ' (id# ',
+	              ' (Mile #: ',
 	              this.props.line[1].id,
 	              ')'
 	            )

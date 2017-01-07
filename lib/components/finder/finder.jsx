@@ -33,7 +33,7 @@ class Finder extends React.Component {
         latitude: el.position.lat,
         longitude: el.position.lng
       };
-      let result = Haversine(this.start, end);
+      let result = Haversine(this.start, end, {unit: 'mile'});
       if (dist === undefined) {
         dist = result;
         closestPoint = el;
@@ -45,8 +45,8 @@ class Finder extends React.Component {
     let lineR = [];
     let begin = {
       position: {
-        lat: parseInt(this.start.latitude),
-        lng: parseInt(this.start.longitude)
+        lat: parseFloat(this.start.latitude),
+        lng: parseFloat(this.start.longitude)
       }
     }
     lineR.push(begin);
@@ -68,7 +68,7 @@ class Finder extends React.Component {
             <RaisedButton label='Find Closest Point' onTouchTap={this.findClosestPoint}/>
           </section>
           <section className='text'>
-            <p>Your Dad is {this.props.dist.toFixed(2)} km from {this.props.line[1].position.lat.toFixed(4)}, {this.props.line[1].position.lng.toFixed(4)} (id# {this.props.line[1].id})</p>
+            <p>Your Dad is {this.props.dist.toFixed(2)} miles from {this.props.line[1].position.lat.toFixed(4)}, {this.props.line[1].position.lng.toFixed(4)} (Mile #: {this.props.line[1].id})</p>
           </section>
         </section>
       )

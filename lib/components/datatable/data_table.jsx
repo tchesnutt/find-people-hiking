@@ -108,7 +108,6 @@ class DataTable extends React.Component {
   openModal(id, defPos){
     this.toUpdateId = id;
     this.existingPoint = defPos;
-    console.log(this.toUpdateId);
     this.setState({modal: true});
   }
 
