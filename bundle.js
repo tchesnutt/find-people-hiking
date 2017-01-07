@@ -118347,9 +118347,9 @@
 	  }, {
 	    key: 'closeModal',
 	    value: function closeModal() {
-	      this.idxUpdate = 0;
-	      this.existingMile = 0;
-	      this.existingPoint = { lat: 0, lng: 0 }, this.setState({ modal: false });
+	      this.idxUpdate = undefined;
+	      this.existingMile = undefined;
+	      this.existingPoint = { lat: undefined, lng: undefined }, this.setState({ modal: false });
 	    }
 	  }, {
 	    key: 'openModal',
