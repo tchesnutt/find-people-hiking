@@ -27,6 +27,14 @@
   justify-content: center;
   align-items: baseline;
 }
+
+.add-point {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+
 .text {
   color: white;
 }
@@ -60,6 +68,12 @@
 .update-textbox {
   width: 25% !important;
   margin-right: 5px;
+}
+
+.update-textbox-mile {
+  width: 25% !important;
+  margin-right: 5px;
+  margin-left: 10px;
 }
 
 .interal {

@@ -205,9 +205,9 @@ class DataTable extends React.Component {
             <RaisedButton label='Select' type='submit' primary={true}/>
           </form>
         </section>
-        <section className='options-form'>
+        <section className='add-point'>
           <form onSubmit={this.handleAddPoint}>
-            <TextField type='text' className="update-textbox" floatingLabelText='Mile Number' onChange={this.update("new mile")}/>
+            <TextField type='text' className="update-textbox-mile" floatingLabelText='Mile Number' onChange={this.update("new mile")}/>
             <TextField type='text' className="update-textbox" floatingLabelText='Latitude' onChange={this.update("new latitude")}/>
             <TextField type='text' className="update-textbox" floatingLabelText='Longitude' onChange={this.update("new longitude")}/>
             <RaisedButton label='Add Point' type='submit' primary={true}/>

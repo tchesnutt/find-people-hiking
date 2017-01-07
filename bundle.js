@@ -118459,11 +118459,11 @@
 	        ),
 	        _react2.default.createElement(
 	          'section',
-	          { className: 'options-form' },
+	          { className: 'add-point' },
 	          _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleAddPoint },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Mile Number', onChange: this.update("new mile") }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox-mile', floatingLabelText: 'Mile Number', onChange: this.update("new mile") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', onChange: this.update("new latitude") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', onChange: this.update("new longitude") }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Add Point', type: 'submit', primary: true })
