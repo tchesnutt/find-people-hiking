@@ -72,16 +72,23 @@ class DataTable extends React.Component {
         }
       });
     } else {
-      this.state.data.forEach( el => {
-        if(this.state.selected.includes(el.id) === false){
-          newData.push(el);
+      let selectedId = [];
+      this.state.view.forEach( (el,i) => {
+        if(this.state.selected.includes(i)){
+          selectedId.push(el.id);
         }
-      })
+      });
+      this.state.data.forEach( el => {
+        if(selectedId.includes(el.id) === false){
+          newData.push(el)
+        };
+      });
     }
     this.props.updatePath(newData);
   }
 
   handleToggle(rows){
+    console.log(rows);
     this.state.selected = rows
   }
 
@@ -108,6 +115,10 @@ class DataTable extends React.Component {
     } else if (field === "new mile"){
       return e => {this.newMile = e.currentTarget.value};
     }
+  }
+
+  handleToggle(rows){
+    this.state.selected = rows
   }
 
   closeModal(){

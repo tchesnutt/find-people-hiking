@@ -118286,17 +118286,26 @@
 	          });
 	        })();
 	      } else {
-	        this.state.data.forEach(function (el) {
-	          if (_this3.state.selected.includes(el.id) === false) {
-	            newData.push(el);
-	          }
-	        });
+	        (function () {
+	          var selectedId = [];
+	          _this3.state.view.forEach(function (el, i) {
+	            if (_this3.state.selected.includes(i)) {
+	              selectedId.push(el.id);
+	            }
+	          });
+	          _this3.state.data.forEach(function (el) {
+	            if (selectedId.includes(el.id) === false) {
+	              newData.push(el);
+	            };
+	          });
+	        })();
 	      }
 	      this.props.updatePath(newData);
 	    }
 	  }, {
 	    key: 'handleToggle',
 	    value: function handleToggle(rows) {
+	      console.log(rows);
 	      this.state.selected = rows;
 	    }
 	  }, {
@@ -118343,6 +118352,11 @@
 	          _this4.newMile = e.currentTarget.value;
 	        };
 	      }
+	    }
+	  }, {
+	    key: 'handleToggle',
+	    value: function handleToggle(rows) {
+	      this.state.selected = rows;
 	    }
 	  }, {
 	    key: 'closeModal',
