@@ -75,7 +75,7 @@ class Maps extends React.Component {
             onClick={props.onMapClick}>
             <Marker {...this.state.markers[0]} key='start' label='Start'/>
             <Marker {...this.state.markers[this.state.markers.length - 1]} key='end' label='End'/>
-            <Marker {...this.state.line[0]} key='user' label='Dad'/>
+            <Marker {...this.state.line[0]} key='user' label='Hiker'/>
             <Marker {...this.state.line[1]} key='point' label={this.state.line[1].id.toString()}/>
             <Polyline path={line}
               options={{strokeColor: `#000000`,
