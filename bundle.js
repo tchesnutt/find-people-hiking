@@ -109305,7 +109305,7 @@
 	                  onClick: props.onMapClick },
 	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.markers[0], { key: 'start', label: 'Start' })),
 	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.markers[_this2.state.markers.length - 1], { key: 'end', label: 'End' })),
-	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[0], { key: 'user', label: 'Dad' })),
+	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[0], { key: 'user', label: 'Hiker' })),
 	                _react2.default.createElement(_reactGoogleMaps.Marker, _extends({}, _this2.state.line[1], { key: 'point', label: _this2.state.line[1].id.toString() })),
 	                _react2.default.createElement(_reactGoogleMaps.Polyline, { path: line,
 	                  options: { strokeColor: '#000000',
@@ -118725,8 +118725,8 @@
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Closest Point', type: 'submit', primary: true })
 	          ),
 	          _react2.default.createElement(
@@ -118735,7 +118735,7 @@
 	            _react2.default.createElement(
 	              'p',
 	              null,
-	              'Your Dad is ',
+	              'Your Hiker is ',
 	              this.props.dist.toFixed(2),
 	              ' miles from ',
 	              this.props.line[1].position.lat.toFixed(4),
@@ -118754,9 +118754,9 @@
 	          _react2.default.createElement(
 	            'form',
 	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Dad Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Dad', type: 'submit', primary: true })
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Hiker', type: 'submit', primary: true })
 	          )
 	        );
 	      }

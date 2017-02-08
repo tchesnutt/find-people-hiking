@@ -64,12 +64,12 @@ class Finder extends React.Component {
       return(
         <section className='haversine'>
           <form className='haversine-options' onSubmit={this.findClosestPoint}>
-            <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
-            <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
+            <TextField type='text' floatingLabelText='Hiker Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
+            <TextField type='text' floatingLabelText='Hiker Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
             <RaisedButton label='Find Closest Point' type='submit' primary={true}/>
           </form>
           <section className='text'>
-            <p>Your Dad is {this.props.dist.toFixed(2)} miles from {this.props.line[1].position.lat.toFixed(4)}, {this.props.line[1].position.lng.toFixed(4)} (Mile #: {this.props.line[1].id})</p>
+            <p>Your hiker is {this.props.dist.toFixed(2)} miles from {this.props.line[1].position.lat.toFixed(4)}, {this.props.line[1].position.lng.toFixed(4)} (Mile #: {this.props.line[1].id})</p>
           </section>
         </section>
       )
@@ -77,9 +77,9 @@ class Finder extends React.Component {
       return(
         <section className='haversine'>
           <form className='haversine-options' onSubmit={this.findClosestPoint}>
-            <TextField type='text' floatingLabelText='Dad Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
-            <TextField type='text' floatingLabelText='Dad Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
-            <RaisedButton label='Find Dad' type='submit' primary={true}/>
+            <TextField type='text' floatingLabelText='Hiker Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
+            <TextField type='text' floatingLabelText='Hiker Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
+            <RaisedButton label='Find Hiker' type='submit' primary={true}/>
           </form>
         </section>
       )
