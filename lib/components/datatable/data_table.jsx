@@ -164,8 +164,16 @@ class DataTable extends React.Component {
       }
     }
     let newData = this.state.data;
-    newData.splice(this.bsearch(newPoint.id), 0, newPoint);
-    this.props.updatePath(newData)
+    let idx = this.bsearch(newPoint.id);
+    console.log(newData[idx].id);
+    console.log(newPoint.id);
+    if(newData[idx].id === newPoint.id){
+      console.log("success");
+      newData.splice(idx, 1, newPoint);
+    } else {
+      newData.splice(idx, 0, newPoint);
+    }
+    this.props.updatePath(newData);
   }
 
   bsearch(newMile){
@@ -185,7 +193,7 @@ class DataTable extends React.Component {
       } else if (currentEl.id > newMile) {
         maxIdx = currentIdx - 1;
       } else {
-        return currentIdx
+        return currentIdx;
       }
     }
     return maxIdx + 1;
