@@ -79,7 +79,6 @@ class Finder extends React.Component {
         </section>
       )
     } else {
-      console.log(this.state.error);
       if (this.state.error) {
         return(
           <section className='haversine'>
