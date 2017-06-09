@@ -119394,7 +119394,8 @@
 	    };
 	    _this.state = {
 	      closestPoint: undefined,
-	      dist: undefined
+	      dist: undefined,
+	      error: false
 	    };
 	    _this.update = _this.update.bind(_this);
 	    _this.findClosestPoint = _this.findClosestPoint.bind(_this);
@@ -119424,34 +119425,38 @@
 	      e.preventDefault();
 	      var dist = void 0;
 	      var closestPoint = void 0;
-	      this.props.path.forEach(function (el) {
-	        var end = {
-	          latitude: el.position.lat,
-	          longitude: el.position.lng
+	      if (this.props.path) {
+	        this.props.path.forEach(function (el) {
+	          var end = {
+	            latitude: el.position.lat,
+	            longitude: el.position.lng
+	          };
+	          var result = (0, _haversine2.default)(_this3.start, end, { unit: 'mile' });
+	          if (dist === undefined) {
+	            dist = result;
+	            closestPoint = el;
+	          } else if (dist > result) {
+	            dist = result;
+	            closestPoint = el;
+	          }
+	        });
+	        var lineR = [];
+	        var begin = {
+	          position: {
+	            lat: parseFloat(this.start.latitude),
+	            lng: parseFloat(this.start.longitude)
+	          }
 	        };
-	        var result = (0, _haversine2.default)(_this3.start, end, { unit: 'mile' });
-	        if (dist === undefined) {
-	          dist = result;
-	          closestPoint = el;
-	        } else if (dist > result) {
-	          dist = result;
-	          closestPoint = el;
-	        }
-	      });
-	      var lineR = [];
-	      var begin = {
-	        position: {
-	          lat: parseFloat(this.start.latitude),
-	          lng: parseFloat(this.start.longitude)
-	        }
-	      };
-	      lineR.push(begin);
-	      lineR.push(closestPoint);
-	      var obj = {
-	        line: lineR,
-	        dist: dist
-	      };
-	      this.props.addLineAndDist(obj);
+	        lineR.push(begin);
+	        lineR.push(closestPoint);
+	        var obj = {
+	          line: lineR,
+	          dist: dist
+	        };
+	        this.props.addLineAndDist(obj);
+	      } else {
+	        this.setState({ error: true });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -119486,17 +119491,41 @@
 	          )
 	        );
 	      } else {
-	        return _react2.default.createElement(
-	          'section',
-	          { className: 'haversine' },
-	          _react2.default.createElement(
-	            'form',
-	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Hiker', type: 'submit', primary: true })
-	          )
-	        );
+	        console.log(this.state.error);
+	        if (this.state.error) {
+	          return _react2.default.createElement(
+	            'section',
+	            { className: 'haversine' },
+	            _react2.default.createElement(
+	              'form',
+	              { className: 'haversine-options', onSubmit: this.findClosestPoint },
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
+	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Hiker', type: 'submit', primary: true })
+	            ),
+	            _react2.default.createElement(
+	              'section',
+	              { className: 'text' },
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                'You need to upload a trail first'
+	              )
+	            )
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'section',
+	            { className: 'haversine' },
+	            _react2.default.createElement(
+	              'form',
+	              { className: 'haversine-options', onSubmit: this.findClosestPoint },
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
+	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Hiker', type: 'submit', primary: true })
+	            )
+	          );
+	        }
 	      }
 	    }
 	  }]);
