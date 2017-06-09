@@ -26,14 +26,12 @@ class Maps extends React.Component {
       let isPath = !(this.state.markers.length === 0);
       if((isLine === false) && (isPath === false)) {
         return(
-          <div style={{height: `100%`,
-                       width: `50%`}} className='second-step'>
-            <GoogleMap
-              defaultZoom={4}
-              defaultCenter={{lat: 37.0902, lng: -95.7129}}
-              onClick={props.onMapClick}>
-            </GoogleMap>
-          </div>
+          <GoogleMap
+            ref={props.onMapLoad}
+            defaultZoom={4}
+            defaultCenter={{lat: 37.0902, lng: -95.7129}}
+            onClick={props.onMapClick}>
+          </GoogleMap>
         );
       } else if((isLine === false) && (isPath === true)) {
         let halfway = Math.floor(this.state.markers.length / 2);
@@ -46,20 +44,17 @@ class Maps extends React.Component {
           path.push(el.position)
         });
         return(
-          <div style={{height: `100%`,
-                       width: `50%`}} className='second-step'>
-            <GoogleMap
-              defaultZoom={5}
-              defaultCenter={center}
-              onClick={props.onMapClick}>
-              <Marker {...this.state.markers[0]} key='start' label='Start'/>
-              <Marker {...this.state.markers[this.state.markers.length - 1]} key='end' label='End'/>
-              <Polyline path={path}
-               options={{strokeColor: `#FF0000`,
-                 strokeOpacity: `.7`}}/>
-            </GoogleMap>
-
-          </div>
+          <GoogleMap
+            ref={props.onMapLoad}
+            defaultZoom={5}
+            defaultCenter={center}
+            onClick={props.onMapClick}>
+            <Marker {...this.state.markers[0]} key='start' label='Start'/>
+            <Marker {...this.state.markers[this.state.markers.length - 1]} key='end' label='End'/>
+            <Polyline path={path}
+              options={{strokeColor: `#FF0000`,
+                      strokeOpacity: `.7`}}/>
+          </GoogleMap>
         )
       } else if((isLine === true) && (isPath === true)) {
         let halfway = Math.floor(this.state.markers.length / 2);
@@ -73,31 +68,29 @@ class Maps extends React.Component {
           path.push(el.position)
         });
         return(
-          <div style={{height: `100%`,
-                       width: `50%`}} className='second-step'>
-             <GoogleMap
-               defaultZoom={7}
-               defaultCenter={center}
-               onClick={props.onMapClick}>
-               <Marker {...this.state.markers[0]} key='start' label='Start'/>
-               <Marker {...this.state.markers[this.state.markers.length - 1]} key='end' label='End'/>
-               <Marker {...this.state.line[0]} key='user' label='Hiker'/>
-               <Marker {...this.state.line[1]} key='point' label={this.state.line[1].id.toString()}/>
-               <Polyline path={line}
-                 options={{strokeColor: `#000000`,
-                   strokeOpacity: `1`,
-                   strokeWeight: `0.7`}}/>
-                 <Polyline path={path}
-                   options={{strokeColor: `#FF0000`,
-                     strokeOpacity: `.7`}}/>
-                 </GoogleMap>
-          </div>
+          <GoogleMap
+            ref={props.onMapLoad}
+            defaultZoom={7}
+            defaultCenter={center}
+            onClick={props.onMapClick}>
+            <Marker {...this.state.markers[0]} key='start' label='Start'/>
+            <Marker {...this.state.markers[this.state.markers.length - 1]} key='end' label='End'/>
+            <Marker {...this.state.line[0]} key='user' label='Hiker'/>
+            <Marker {...this.state.line[1]} key='point' label={this.state.line[1].id.toString()}/>
+            <Polyline path={line}
+              options={{strokeColor: `#000000`,
+                      strokeOpacity: `1`,
+                      strokeWeight: `0.7`}}/>
+            <Polyline path={path}
+              options={{strokeColor: `#FF0000`,
+                      strokeOpacity: `.7`}}/>
+          </GoogleMap>
         )
       }
     });
     return(
       <div style={{height: `100%`,
-                   width: `50%`}} className='second-step'>
+                   width: `50%`}} className="second-step">
         <GettingGoogleMap
           containerElement={
             <div style={{ height: `100%` }} />
