@@ -43,10 +43,11 @@ class UploadModal extends React.Component {
           <section className='interal'>
             <section className='drop'>
               <Dropzone onDrop={this.onDrop}>
-                <section>Drop your JSON file here!</section>
+                <h2 className='dropzone-text'>Drop your JSON file here!</h2>
               </Dropzone>
             </section>
             <RaisedButton label='Use Default PCT-Trail' onTouchTap={this.handleDefaultPath} primary={true}/>
+            <RaisedButton label='Close' onTouchTap={this.props.closeUploadModal} primary={true}/>
           </section>
         </Dialog>
       </section>

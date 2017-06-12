@@ -14,11 +14,11 @@ class AppToolBar extends React.Component {
       <section>
         <Toolbar className='toolbar'>
           <ToolbarGroup className='title'>
-            <h1 className='title'>Find People Hiking</h1>
+            <section className='title'>Find People Hiking</section>
           </ToolbarGroup>
           <ToolbarGroup className='toolbar-right'>
             <RaisedButton className='first-step' label='Upload Path' onClick={this.props.openUploadModal}/>
-            <RaisedButton className='tour' label='Tour' onClick={console.log('successfullyy cliiicked')}/>
+            <RaisedButton className='tour' label='Tour' onClick={this.props.startTour}/>
           </ToolbarGroup>
         </Toolbar>
         <UploadModal/>

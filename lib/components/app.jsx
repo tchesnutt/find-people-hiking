@@ -34,6 +34,7 @@ const customTheme = getMuiTheme({
 class App extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     const steps = [
       {
         title: 'Uploading a Trail',
@@ -128,8 +129,8 @@ class App extends React.Component {
             next: (<span>Next</span>),
             skip: (<span>Skip</span>),
           }}
-          run={true}
-          autoStart={false}
+          run={this.props.tour}
+          autoStart={this.props.tour}
           showOverlay={this.state.joyrideOverlay}
           showSkipButton={true}
           showStepsProgress={true}
