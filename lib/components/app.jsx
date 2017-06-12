@@ -2,11 +2,33 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { cyan500, cyan700, grey400, pinkA200, grey100, grey500, grey300, darkBlack, white, fullBlack } from 'material-ui';
 import ToolBar from './toolbar/app_toolbar_container';
 import Maps from './maps/maps_container';
 import DataTable from './datatable/data_table_container';
 import Finder from './finder/finder_container';
 import Joyride from 'react-joyride'
+
+const customTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
+  palette: {
+    primary1Color: cyan500,
+    primary2Color: '#1A5FFF',
+    primary3Color: cyan700,
+    accent1Color: pinkA200,
+    accent2Color: '#1A5FFF',
+    accent3Color: grey500,
+    textColor: darkBlack,
+    secondaryTextColor: darkBlack,
+    alternateTextColor: white,
+    canvasColor: white,
+    borderColor: grey300,
+    disabledColor: darkBlack,
+    pickerHeaderColor: cyan500,
+    clockCircleColor: darkBlack,
+    shadowColor: fullBlack
+  }
+});
 
 
 class App extends React.Component {
@@ -18,7 +40,7 @@ class App extends React.Component {
         text: 'Click this button and either use the Pacific Coast Trail as default or simply drag your own into the box!',
         selector: '.first-step',
         trigger: '.first-step',
-        position: 'bottom-left',
+        position: 'bottom',
         type: 'hover',
         isFixed: true,
       },
@@ -82,7 +104,7 @@ class App extends React.Component {
       joyrideOverlay: true,
       joyrideType: 'continuous',
       isReady: true,
-      isRunning: true,
+      isRunning: false,
       stepIndex: 0,
       steps: steps
     };
@@ -94,7 +116,6 @@ class App extends React.Component {
   }
 
   render(){
-
     return (
       <div>
         <Joyride
@@ -108,7 +129,7 @@ class App extends React.Component {
             skip: (<span>Skip</span>),
           }}
           run={true}
-          autoStart={true}
+          autoStart={false}
           showOverlay={this.state.joyrideOverlay}
           showSkipButton={true}
           showStepsProgress={true}
@@ -119,7 +140,7 @@ class App extends React.Component {
           />
         <div id="page-wrapper">
           <div className="container-fluid">
-            <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+            <MuiThemeProvider muiTheme={customTheme}>
               <section className='root'>
                 <section className='top'>
                   <ToolBar/>

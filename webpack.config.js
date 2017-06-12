@@ -12,9 +12,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new ExtractTextPlugin('app.css', {
-        allChunks: true
-    }),
+    new ExtractTextPlugin('app.css', { allChunks: true }),
     new webpack.NoErrorsPlugin()
   ],
   module: {

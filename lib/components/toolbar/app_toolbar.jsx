@@ -1,7 +1,7 @@
 import React from 'react';
 import UploadModal from './upload_modal_container';
-import { Toolbar, ToolbarGroup, FlatButton, RaisedButton, MuiThemeProvider, getMuiTheme } from 'material-ui';
-import Joyride from 'react-joyride';
+import { Toolbar, ToolbarGroup, FlatButton, RaisedButton } from 'material-ui';
+
 
 
 class AppToolBar extends React.Component {
@@ -11,10 +11,14 @@ class AppToolBar extends React.Component {
 
   render(){
     return(
-      <section className='toolbar'>
-        <Toolbar>
-          <ToolbarGroup>
+      <section>
+        <Toolbar className='toolbar'>
+          <ToolbarGroup className='title'>
+            <h1 className='title'>Find People Hiking</h1>
+          </ToolbarGroup>
+          <ToolbarGroup className='toolbar-right'>
             <RaisedButton className='first-step' label='Upload Path' onClick={this.props.openUploadModal}/>
+            <RaisedButton className='tour' label='Tour' onClick={console.log('successfullyy cliiicked')}/>
           </ToolbarGroup>
         </Toolbar>
         <UploadModal/>
