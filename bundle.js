@@ -83331,6 +83331,12 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var toolbarButtonStyle = {
+	  palette: {
+	    textColor: '#FFFFFF'
+	  }
+	};
+	
 	var AppToolBar = function (_React$Component) {
 	  _inherits(AppToolBar, _React$Component);
 	
@@ -83353,7 +83359,7 @@
 	            _materialUi.ToolbarGroup,
 	            { className: 'title' },
 	            _react2.default.createElement(
-	              'section',
+	              'div',
 	              { className: 'title' },
 	              'Find People Hiking'
 	            )
@@ -120634,6 +120640,10 @@
 	
 	var _materialUi = __webpack_require__(380);
 	
+	var _valid_lat_lng = __webpack_require__(826);
+	
+	var _valid_lat_lng2 = _interopRequireDefault(_valid_lat_lng);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -120737,7 +120747,6 @@
 	  }, {
 	    key: 'handleToggle',
 	    value: function handleToggle(rows) {
-	      console.log(rows);
 	      this.state.selected = rows;
 	    }
 	  }, {
@@ -120838,10 +120847,7 @@
 	      };
 	      var newData = this.state.data;
 	      var idx = this.bsearch(newPoint.id);
-	      console.log(newData[idx].id);
-	      console.log(newPoint.id);
 	      if (newData[idx].id === newPoint.id) {
-	        console.log("success");
 	        newData.splice(idx, 1, newPoint);
 	      } else {
 	        newData.splice(idx, 0, newPoint);
@@ -120895,7 +120901,7 @@
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Mile Number', defaultValue: this.existingMile, onChange: this.update("mile") }),
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', defaultValue: this.existingPoint.lat, onChange: this.update("latitude") }),
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', defaultValue: this.existingPoint.lng, onChange: this.update("longitude") }),
-	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Update', type: 'submit', primary: true })
+	              _react2.default.createElement(_materialUi.FlatButton, { label: 'Update', type: 'submit', primary: true })
 	            )
 	          )
 	        ),
@@ -120908,19 +120914,19 @@
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox-mile', floatingLabelText: 'Mile Number', onChange: this.update("new mile") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', onChange: this.update("new latitude") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', onChange: this.update("new longitude") }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Add Point', type: 'submit', primary: true })
+	            _react2.default.createElement(_materialUi.FlatButton, { label: 'Add Point', type: 'submit', primary: true })
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'section',
 	          { className: 'options-form' },
-	          _react2.default.createElement(_materialUi.RaisedButton, { label: 'Delete Selected', onTouchTap: this.handleDeleteSelected, className: 'delete-button' }),
+	          _react2.default.createElement(_materialUi.FlatButton, { label: 'Delete Selected', onTouchTap: this.handleDeleteSelected, className: 'delete-button', primary: true }),
 	          _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleSelect, className: 'left-options' },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-left' }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select To', defaultValue: this.end, floatingLabelText: 'Select to', onChange: this.update("end"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Select', type: 'submit', primary: true })
+	            _react2.default.createElement(_materialUi.FlatButton, { label: 'Select', type: 'submit', primary: true })
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -121172,7 +121178,7 @@
 	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Closest Point', type: 'submit', primary: true })
+	            _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Closest Point', type: 'submit', primary: true })
 	          ),
 	          _react2.default.createElement(
 	            'section',
@@ -121202,7 +121208,7 @@
 	              { className: 'haversine-options', onSubmit: this.findClosestPoint },
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Hiker', type: 'submit', primary: true })
+	              _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Hiker', type: 'submit', primary: true })
 	            ),
 	            _react2.default.createElement(
 	              'section',
@@ -121223,7 +121229,7 @@
 	              { className: 'haversine-options', onSubmit: this.findClosestPoint },
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
 	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	              _react2.default.createElement(_materialUi.RaisedButton, { label: 'Find Hiker', type: 'submit', primary: true })
+	              _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Hiker', type: 'submit', primary: true })
 	            )
 	          );
 	        }
@@ -121591,6 +121597,22 @@
 	};
 	
 	module.exports = keyOf;
+
+/***/ }),
+/* 826 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	exports.validLatLng = function (min, num, max) {
+	  if (!isNaN(num) && num >= min && num <= max) {
+	    return true;
+	  } else {
+	    return false;
+	  };
+	};
+	// valid lat -90, 90
+	// valid lng -180, 180
 
 /***/ })
 /******/ ]);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TextField, RaisedButton, Dialog, FlatButton } from 'material-ui';
+import validLatLng from '../../utils/valid_lat_lng'
 
 class DataTable extends React.Component {
   constructor(props){
@@ -88,7 +89,6 @@ class DataTable extends React.Component {
   }
 
   handleToggle(rows){
-    console.log(rows);
     this.state.selected = rows
   }
 
@@ -165,10 +165,7 @@ class DataTable extends React.Component {
     }
     let newData = this.state.data;
     let idx = this.bsearch(newPoint.id);
-    console.log(newData[idx].id);
-    console.log(newPoint.id);
     if(newData[idx].id === newPoint.id){
-      console.log("success");
       newData.splice(idx, 1, newPoint);
     } else {
       newData.splice(idx, 0, newPoint);
@@ -212,7 +209,7 @@ class DataTable extends React.Component {
               <TextField type='text' className="update-textbox" floatingLabelText='Mile Number' defaultValue={this.existingMile} onChange={this.update("mile")}/>
               <TextField type='text' className="update-textbox" floatingLabelText='Latitude' defaultValue={this.existingPoint.lat} onChange={this.update("latitude")}/>
               <TextField type='text' className="update-textbox" floatingLabelText='Longitude' defaultValue={this.existingPoint.lng} onChange={this.update("longitude")}/>
-              <RaisedButton label='Update' type='submit' primary={true}/>
+              <FlatButton label='Update' type='submit' primary={true}/>
             </form>
           </Dialog>
         </section>
@@ -221,15 +218,15 @@ class DataTable extends React.Component {
             <TextField type='text' className="update-textbox-mile" floatingLabelText='Mile Number' onChange={this.update("new mile")}/>
             <TextField type='text' className="update-textbox" floatingLabelText='Latitude' onChange={this.update("new latitude")}/>
             <TextField type='text' className="update-textbox" floatingLabelText='Longitude' onChange={this.update("new longitude")}/>
-            <RaisedButton label='Add Point' type='submit' primary={true}/>
+            <FlatButton label='Add Point' type='submit' primary={true}/>
           </form>
         </section>
         <section className='options-form'>
-          <RaisedButton label='Delete Selected' onTouchTap={this.handleDeleteSelected} className='delete-button'/>
+          <FlatButton label='Delete Selected' onTouchTap={this.handleDeleteSelected} className='delete-button' primary={true}/>
           <form onSubmit={this.handleSelect} className='left-options'>
-            <TextField type='text' hintText='Select From' floatingLabelText='Select from' defaultValue={this.start} onChange={this.update("start")} className='left-options-item-right'/>
+            <TextField type='text' hintText='Select From' floatingLabelText='Select from' defaultValue={this.start} onChange={this.update("start")} className='left-options-item-left'/>
             <TextField type='text' hintText='Select To' defaultValue={this.end} floatingLabelText='Select to' onChange={this.update("end")} className='left-options-item-right'/>
-            <RaisedButton label='Select' type='submit' primary={true}/>
+            <FlatButton label='Select' type='submit' primary={true}/>
           </form>
         </section>
         <section className='the-table'>
