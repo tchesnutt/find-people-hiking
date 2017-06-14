@@ -22595,7 +22595,6 @@
 	var _defaultState = {
 	  upload: false,
 	  tour: false,
-	  greeting: true,
 	  welcome: true
 	};
 	
@@ -39873,6 +39872,8 @@
 	
 	var _reactRedux = __webpack_require__(208);
 	
+	var _modal_actions = __webpack_require__(203);
+	
 	var _App = __webpack_require__(230);
 	
 	var _App2 = _interopRequireDefault(_App);
@@ -39886,7 +39887,11 @@
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    endTour: function endTour() {
+	      return dispatch((0, _modal_actions.endTour)());
+	    }
+	  };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_App2.default);
@@ -41994,13 +41999,23 @@
 	      stepIndex: 0,
 	      steps: steps
 	    };
+	
+	    _this.handleTourState = _this.handleTourState.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(App, [{
-	    key: 'next',
-	    value: function next() {
-	      this.joyride.next();
+	    key: 'handleTourState',
+	    value: function handleTourState(e) {
+	      if (e.type === 'finished') {
+	        this.refs.joyride.reset();
+	        this.props.endTour();
+	      }
+	    }
+	  }, {
+	    key: 'componentRecievedProps',
+	    value: function componentRecievedProps() {
+	      this.forceUpdate();
 	    }
 	  }, {
 	    key: 'render',
@@ -42046,7 +42061,8 @@
 	          stepIndex: 0,
 	          scrollToSteps: false,
 	          steps: this.state.steps,
-	          type: this.state.joyrideType
+	          type: this.state.joyrideType,
+	          callback: this.handleTourState
 	        }),
 	        _react2.default.createElement(
 	          'div',
@@ -42063,8 +42079,8 @@
 	                _react2.default.createElement(
 	                  'section',
 	                  { className: 'top' },
-	                  _react2.default.createElement(_app_toolbar_container2.default, null),
-	                  _react2.default.createElement(_welcome_container2.default, null)
+	                  _react2.default.createElement(_welcome_container2.default, null),
+	                  _react2.default.createElement(_app_toolbar_container2.default, null)
 	                ),
 	                _react2.default.createElement(
 	                  'secton',
@@ -120885,18 +120901,6 @@
 	        ),
 	        _react2.default.createElement(
 	          'section',
-	          { className: 'options-form' },
-	          _react2.default.createElement(_materialUi.RaisedButton, { label: 'Delete Selected', onTouchTap: this.handleDeleteSelected, className: 'delete-button' }),
-	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: this.handleSelect, className: 'left-options' },
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select To', defaultValue: this.end, floatingLabelText: 'Select to', onChange: this.update("end"), className: 'left-options-item-right' }),
-	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Select', type: 'submit', primary: true })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'section',
 	          { className: 'add-point' },
 	          _react2.default.createElement(
 	            'form',
@@ -120905,6 +120909,18 @@
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', onChange: this.update("new latitude") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', onChange: this.update("new longitude") }),
 	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Add Point', type: 'submit', primary: true })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'section',
+	          { className: 'options-form' },
+	          _react2.default.createElement(_materialUi.RaisedButton, { label: 'Delete Selected', onTouchTap: this.handleDeleteSelected, className: 'delete-button' }),
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.handleSelect, className: 'left-options' },
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select From', floatingLabelText: 'Select from', defaultValue: this.start, onChange: this.update("start"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', hintText: 'Select To', defaultValue: this.end, floatingLabelText: 'Select to', onChange: this.update("end"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.RaisedButton, { label: 'Select', type: 'submit', primary: true })
 	          )
 	        ),
 	        _react2.default.createElement(

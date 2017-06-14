@@ -30,7 +30,6 @@ const customTheme = getMuiTheme({
   }
 });
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -97,7 +96,7 @@ class App extends React.Component {
         position: 'left',
         type: 'hover',
         isFixed: false,
-      },
+      }
     ]
 
     this.state = {
@@ -108,11 +107,19 @@ class App extends React.Component {
       stepIndex: 0,
       steps: steps
     };
+
+    this.handleTourState = this.handleTourState.bind(this);
   }
 
+  handleTourState(e) {
+    if(e.type === 'finished'){
+      this.refs.joyride.reset();
+      this.props.endTour();
+    }
+  }
 
-  next() {
-    this.joyride.next();
+  componentRecievedProps() {
+    this.forceUpdate();
   }
 
   render(){
@@ -137,14 +144,15 @@ class App extends React.Component {
           scrollToSteps={false}
           steps={this.state.steps}
           type={this.state.joyrideType}
+          callback={this.handleTourState}
           />
         <div id="page-wrapper">
           <div className="container-fluid">
             <MuiThemeProvider muiTheme={customTheme}>
               <section className='root'>
                 <section className='top'>
-                  <ToolBar/>
                   <Welcome/>
+                  <ToolBar/>
                 </section>
                 <secton className='main-page'>
                   <Maps/>
