@@ -9,6 +9,7 @@ import Welcome from './welcome_modal/welcome_container';
 import Maps from './maps/maps_container';
 import DataTable from './datatable/data_table_container';
 import Finder from './finder/finder_container';
+import ErrorModal from './error/error_container';
 
 const customTheme = getMuiTheme({
   palette: {
@@ -153,6 +154,7 @@ class App extends React.Component {
                 <section className='top'>
                   <Welcome/>
                   <ToolBar/>
+                  <ErrorModal/>
                 </section>
                 <secton className='main-page'>
                   <Maps/>

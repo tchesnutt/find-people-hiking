@@ -1,21 +1,24 @@
 import React from 'react';
 import { TextField, RaisedButton, FlatButton } from 'material-ui';
 import Haversine from 'haversine';
+import latLngUtils from '../../utils/lat_lng'
 
 class Finder extends React.Component {
   constructor(props){
     super(props)
     this.start = {
-      latitude: 0,
-      longitude: 0
+      latitude: NaN,
+      longitude: NaN
     };
+
     this.state = {
       closestPoint: undefined,
       dist: undefined,
       error: false
     };
+    
     this.update = this.update.bind(this)
-    this.findClosestPoint = this.findClosestPoint.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   update(field){
@@ -26,8 +29,17 @@ class Finder extends React.Component {
     }
   }
 
-  findClosestPoint(e){
+  handleSubmit(e) {
     e.preventDefault();
+    if(latLngUtils.validLatLng(-90, this.start.latitude, 90) && latLngUtils.validLatLng(-180, this.start.longitude, 180)) {
+      this.findClosestPoint()
+    } else {
+      let error = 'You must enter valid coordinates';
+      this.props.showError(error);
+    }
+  }
+
+  findClosestPoint(){
     let dist;
     let closestPoint;
     if(this.props.path){
@@ -60,7 +72,8 @@ class Finder extends React.Component {
       }
       this.props.addLineAndDist(obj)
     } else {
-      this.setState({error: true})
+      let error = 'You need to upload a trail first';
+      this.props.showError(error);
     }
   }
 
@@ -68,7 +81,7 @@ class Finder extends React.Component {
     if (this.props.dist) {
       return(
         <section className='haversine'>
-          <form className='haversine-options' onSubmit={this.findClosestPoint}>
+          <form className='haversine-options' onSubmit={this.handleSubmit}>
             <TextField type='text' floatingLabelText='Hiker Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
             <TextField type='text' floatingLabelText='Hiker Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
             <FlatButton label='Find Closest Point' type='submit' primary={true}/>
@@ -79,30 +92,15 @@ class Finder extends React.Component {
         </section>
       )
     } else {
-      if (this.state.error) {
-        return(
-          <section className='haversine'>
-            <form className='haversine-options' onSubmit={this.findClosestPoint}>
-              <TextField type='text' floatingLabelText='Hiker Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
-              <TextField type='text' floatingLabelText='Hiker Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
-              <FlatButton label='Find Hiker' type='submit' primary={true}/>
-            </form>
-            <section className='text'>
-              <p>You need to upload a trail first</p>
-            </section>
-          </section>
-        )
-      } else {
-        return(
-          <section className='haversine'>
-            <form className='haversine-options' onSubmit={this.findClosestPoint}>
-              <TextField type='text' floatingLabelText='Hiker Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
-              <TextField type='text' floatingLabelText='Hiker Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
-              <FlatButton label='Find Hiker' type='submit' primary={true}/>
-            </form>
-          </section>
-        )
-      }
+      return(
+        <section className='haversine'>
+          <form className='haversine-options' onSubmit={this.handleSubmit}>
+            <TextField type='text' floatingLabelText='Hiker Latitude' onChange={this.update('latitude')} className='left-options-item-right'/>
+            <TextField type='text' floatingLabelText='Hiker Longitude' onChange={this.update("longitude")} className='left-options-item-right'/>
+            <FlatButton label='Find Hiker' type='submit' primary={true}/>
+          </form>
+        </section>
+      )
     }
   }
 }

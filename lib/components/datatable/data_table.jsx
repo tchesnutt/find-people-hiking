@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TextField, RaisedButton, Dialog, FlatButton } from 'material-ui';
-import validLatLng from '../../utils/valid_lat_lng'
+import latLngUtils from '../../utils/lat_lng'
 
 class DataTable extends React.Component {
   constructor(props){
@@ -10,9 +10,9 @@ class DataTable extends React.Component {
     this.latitude = undefined,
     this.longitude = undefined,
     this.mile = undefined,
-    this.newLatitude = undefined,
-    this.newLongitude = undefined,
-    this.newMile = undefined,
+    this.newLatitude = NaN,
+    this.newLongitude = NaN,
+    this.newMile = NaN,
     this.idxUpdate = undefined,
     this.existingMile = undefined,
     this.existingPoint = {lat: undefined, lng: undefined},
@@ -44,7 +44,7 @@ class DataTable extends React.Component {
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
-    this.handleAddPoint = this.handleAddPoint.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -109,11 +109,29 @@ class DataTable extends React.Component {
     } else if (field === "mile"){
       return e => {this.mile = e.currentTarget.value};
     } else if (field === "new latitude"){
-      return e => {this.newLatitude = e.currentTarget.value};
+      return e => {
+        if(e.currentTarget.value === ''){
+          this.newLatitude = NaN;
+        } else {
+          this.newLatitude = e.currentTarget.value;
+        }
+      };
     } else if (field === "new longitude"){
-      return e => {this.newLongitude = e.currentTarget.value};
+      return e => {
+        if(e.currentTarget.value === ''){
+          this.newLongitude = NaN;
+        } else {
+          this.newLongitude = e.currentTarget.value;
+        }
+      };
     } else if (field === "new mile"){
-      return e => {this.newMile = e.currentTarget.value};
+      return e => {
+        if(e.currentTarget.value === ''){
+          this.newMile = NaN;
+        } else {
+          this.newMile = e.currentTarget.value;
+        }
+      }
     }
   }
 
@@ -153,8 +171,37 @@ class DataTable extends React.Component {
     this.props.updatePath(newData);
   }
 
-  handleAddPoint(e){
+  handleSubmit(e) {
     e.preventDefault();
+    if(latLngUtils.validLatLng(-90, this.newLatitude, 90) && latLngUtils.validLatLng(-180, this.newLongitude, 180)) {
+      if(this.state.data.length === 0) {
+        let error = 'You must upload a path first';
+        this.props.showError(error);
+      } else {
+        if(isNaN(this.newMile)) {
+          let error = 'Please enter a valid mile number';
+          this.props.showError(error);
+        } else {
+          if(this.newMile >= 0) {
+            this.handleAddPoint();
+          } else {
+            let error = 'Mile numbers are never negative';
+            this.props.showError(error);
+          }
+        }
+      }
+    } else {
+      if(this.state.data.length === 0){
+        let error = 'You must upload a path first';
+        this.props.showError(error);
+      } else {
+        let error = 'You must enter valid coordinates';
+        this.props.showError(error);
+      }
+    }
+  }
+
+  handleAddPoint(){
     let newPoint = {
       id: parseFloat(this.newMile),
       selected: false,
@@ -214,7 +261,7 @@ class DataTable extends React.Component {
           </Dialog>
         </section>
         <section className='add-point'>
-          <form onSubmit={this.handleAddPoint}>
+          <form onSubmit={this.handleSubmit}>
             <TextField type='text' className="update-textbox-mile" floatingLabelText='Mile Number' onChange={this.update("new mile")}/>
             <TextField type='text' className="update-textbox" floatingLabelText='Latitude' onChange={this.update("new latitude")}/>
             <TextField type='text' className="update-textbox" floatingLabelText='Longitude' onChange={this.update("new longitude")}/>

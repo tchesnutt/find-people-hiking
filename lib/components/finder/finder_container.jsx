@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import Finder from './finder';
 import { addLineAndDist } from '../../actions/path_actions';
+import { showError } from '../../actions/modal_actions';
+import Finder from './finder';
 
 
 
@@ -11,7 +12,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLineAndDist: (obj) => dispatch(addLineAndDist(obj))
+  addLineAndDist: (obj) => dispatch(addLineAndDist(obj)),
+  showError: (message) => dispatch(showError(message))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Finder);

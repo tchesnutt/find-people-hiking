@@ -66,7 +66,7 @@
 	
 	var _root2 = _interopRequireDefault(_root);
 	
-	var _reactTapEventPlugin = __webpack_require__(821);
+	var _reactTapEventPlugin = __webpack_require__(824);
 	
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 	
@@ -22595,7 +22595,11 @@
 	var _defaultState = {
 	  upload: false,
 	  tour: false,
-	  welcome: true
+	  welcome: true,
+	  error: {
+	    show: false,
+	    message: 'No errors to report sir!'
+	  }
 	};
 	
 	exports.default = function () {
@@ -22614,6 +22618,10 @@
 	      return (0, _lodash.merge)({}, state, { tour: false });
 	    case _modal_actions.KILL_WELCOME:
 	      return (0, _lodash.merge)({}, state, { welcome: false });
+	    case _modal_actions.SHOW_ERROR:
+	      return (0, _lodash.merge)({}, state, { error: { show: true, message: action.message } });
+	    case _modal_actions.KILL_ERROR:
+	      return (0, _lodash.merge)({}, state, { error: { show: false } });
 	    default:
 	      return state;
 	  }
@@ -39724,6 +39732,8 @@
 	var START_TOUR = exports.START_TOUR = "START_TOUR";
 	var END_TOUR = exports.END_TOUR = "END_TOUR";
 	var KILL_WELCOME = exports.KILL_WELCOME = "KILL_WELCOME";
+	var SHOW_ERROR = exports.SHOW_ERROR = "SHOW_ERROR";
+	var KILL_ERROR = exports.KILL_ERROR = "KILL_ERROR";
 	
 	var openUploadModal = exports.openUploadModal = function openUploadModal() {
 	  return {
@@ -39752,6 +39762,19 @@
 	var killWelcome = exports.killWelcome = function killWelcome() {
 	  return {
 	    type: KILL_WELCOME
+	  };
+	};
+	
+	var showError = exports.showError = function showError(message) {
+	  return {
+	    type: SHOW_ERROR,
+	    message: message
+	  };
+	};
+	
+	var killError = exports.killError = function killError() {
+	  return {
+	    type: KILL_ERROR
 	  };
 	};
 
@@ -41893,9 +41916,13 @@
 	
 	var _data_table_container2 = _interopRequireDefault(_data_table_container);
 	
-	var _finder_container = __webpack_require__(818);
+	var _finder_container = __webpack_require__(819);
 	
 	var _finder_container2 = _interopRequireDefault(_finder_container);
+	
+	var _error_container = __webpack_require__(822);
+	
+	var _error_container2 = _interopRequireDefault(_error_container);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -42080,7 +42107,8 @@
 	                  'section',
 	                  { className: 'top' },
 	                  _react2.default.createElement(_welcome_container2.default, null),
-	                  _react2.default.createElement(_app_toolbar_container2.default, null)
+	                  _react2.default.createElement(_app_toolbar_container2.default, null),
+	                  _react2.default.createElement(_error_container2.default, null)
 	                ),
 	                _react2.default.createElement(
 	                  'secton',
@@ -120604,6 +120632,8 @@
 	
 	var _path_actions = __webpack_require__(205);
 	
+	var _modal_actions = __webpack_require__(203);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -120616,6 +120646,9 @@
 	  return {
 	    updatePath: function updatePath(path) {
 	      return dispatch((0, _path_actions.updatePath)(path));
+	    },
+	    showError: function showError(message) {
+	      return dispatch((0, _modal_actions.showError)(message));
 	    }
 	  };
 	};
@@ -120640,9 +120673,9 @@
 	
 	var _materialUi = __webpack_require__(380);
 	
-	var _valid_lat_lng = __webpack_require__(826);
+	var _lat_lng = __webpack_require__(818);
 	
-	var _valid_lat_lng2 = _interopRequireDefault(_valid_lat_lng);
+	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -120662,7 +120695,7 @@
 	
 	    _this.start = 0;
 	    _this.end = 99;
-	    _this.latitude = undefined, _this.longitude = undefined, _this.mile = undefined, _this.newLatitude = undefined, _this.newLongitude = undefined, _this.newMile = undefined, _this.idxUpdate = undefined, _this.existingMile = undefined, _this.existingPoint = { lat: undefined, lng: undefined }, _this.state = {
+	    _this.latitude = undefined, _this.longitude = undefined, _this.mile = undefined, _this.newLatitude = NaN, _this.newLongitude = NaN, _this.newMile = NaN, _this.idxUpdate = undefined, _this.existingMile = undefined, _this.existingPoint = { lat: undefined, lng: undefined }, _this.state = {
 	      fixedHeader: true,
 	      fixedFooter: true,
 	      stripedRows: true,
@@ -120690,7 +120723,7 @@
 	    _this.openModal = _this.openModal.bind(_this);
 	    _this.closeModal = _this.closeModal.bind(_this);
 	    _this.handleUpdate = _this.handleUpdate.bind(_this);
-	    _this.handleAddPoint = _this.handleAddPoint.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
 	
@@ -120782,15 +120815,27 @@
 	        };
 	      } else if (field === "new latitude") {
 	        return function (e) {
-	          _this4.newLatitude = e.currentTarget.value;
+	          if (e.currentTarget.value === '') {
+	            _this4.newLatitude = NaN;
+	          } else {
+	            _this4.newLatitude = e.currentTarget.value;
+	          }
 	        };
 	      } else if (field === "new longitude") {
 	        return function (e) {
-	          _this4.newLongitude = e.currentTarget.value;
+	          if (e.currentTarget.value === '') {
+	            _this4.newLongitude = NaN;
+	          } else {
+	            _this4.newLongitude = e.currentTarget.value;
+	          }
 	        };
 	      } else if (field === "new mile") {
 	        return function (e) {
-	          _this4.newMile = e.currentTarget.value;
+	          if (e.currentTarget.value === '') {
+	            _this4.newMile = NaN;
+	          } else {
+	            _this4.newMile = e.currentTarget.value;
+	          }
 	        };
 	      }
 	    }
@@ -120834,9 +120879,39 @@
 	      this.props.updatePath(newData);
 	    }
 	  }, {
-	    key: 'handleAddPoint',
-	    value: function handleAddPoint(e) {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
 	      e.preventDefault();
+	      if (_lat_lng2.default.validLatLng(-90, this.newLatitude, 90) && _lat_lng2.default.validLatLng(-180, this.newLongitude, 180)) {
+	        if (this.state.data.length === 0) {
+	          var error = 'You must upload a path first';
+	          this.props.showError(error);
+	        } else {
+	          if (isNaN(this.newMile)) {
+	            var _error = 'Please enter a valid mile number';
+	            this.props.showError(_error);
+	          } else {
+	            if (this.newMile >= 0) {
+	              this.handleAddPoint();
+	            } else {
+	              var _error2 = 'Mile numbers are never negative';
+	              this.props.showError(_error2);
+	            }
+	          }
+	        }
+	      } else {
+	        if (this.state.data.length === 0) {
+	          var _error3 = 'You must upload a path first';
+	          this.props.showError(_error3);
+	        } else {
+	          var _error4 = 'You must enter valid coordinates';
+	          this.props.showError(_error4);
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'handleAddPoint',
+	    value: function handleAddPoint() {
 	      var newPoint = {
 	        id: parseFloat(this.newMile),
 	        selected: false,
@@ -120910,7 +120985,7 @@
 	          { className: 'add-point' },
 	          _react2.default.createElement(
 	            'form',
-	            { onSubmit: this.handleAddPoint },
+	            { onSubmit: this.handleSubmit },
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox-mile', floatingLabelText: 'Mile Number', onChange: this.update("new mile") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Latitude', onChange: this.update("new latitude") }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', className: 'update-textbox', floatingLabelText: 'Longitude', onChange: this.update("new longitude") }),
@@ -121022,6 +121097,22 @@
 
 /***/ }),
 /* 818 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	exports.validLatLng = function (min, num, max) {
+	  if (!isNaN(num) && num >= min && num <= max) {
+	    return true;
+	  } else {
+	    return false;
+	  };
+	};
+	// valid lat -90, 90
+	// valid lng -180, 180
+
+/***/ }),
+/* 819 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -121032,11 +121123,13 @@
 	
 	var _reactRedux = __webpack_require__(208);
 	
-	var _finder = __webpack_require__(819);
+	var _path_actions = __webpack_require__(205);
+	
+	var _modal_actions = __webpack_require__(203);
+	
+	var _finder = __webpack_require__(820);
 	
 	var _finder2 = _interopRequireDefault(_finder);
-	
-	var _path_actions = __webpack_require__(205);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -121052,6 +121145,9 @@
 	  return {
 	    addLineAndDist: function addLineAndDist(obj) {
 	      return dispatch((0, _path_actions.addLineAndDist)(obj));
+	    },
+	    showError: function showError(message) {
+	      return dispatch((0, _modal_actions.showError)(message));
 	    }
 	  };
 	};
@@ -121059,7 +121155,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_finder2.default);
 
 /***/ }),
-/* 819 */
+/* 820 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -121076,9 +121172,13 @@
 	
 	var _materialUi = __webpack_require__(380);
 	
-	var _haversine = __webpack_require__(820);
+	var _haversine = __webpack_require__(821);
 	
 	var _haversine2 = _interopRequireDefault(_haversine);
+	
+	var _lat_lng = __webpack_require__(818);
+	
+	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -121097,16 +121197,18 @@
 	    var _this = _possibleConstructorReturn(this, (Finder.__proto__ || Object.getPrototypeOf(Finder)).call(this, props));
 	
 	    _this.start = {
-	      latitude: 0,
-	      longitude: 0
+	      latitude: NaN,
+	      longitude: NaN
 	    };
+	
 	    _this.state = {
 	      closestPoint: undefined,
 	      dist: undefined,
 	      error: false
 	    };
+	
 	    _this.update = _this.update.bind(_this);
-	    _this.findClosestPoint = _this.findClosestPoint.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
 	
@@ -121126,11 +121228,21 @@
 	      }
 	    }
 	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      if (_lat_lng2.default.validLatLng(-90, this.start.latitude, 90) && _lat_lng2.default.validLatLng(-180, this.start.longitude, 180)) {
+	        this.findClosestPoint();
+	      } else {
+	        var error = 'You must enter valid coordinates';
+	        this.props.showError(error);
+	      }
+	    }
+	  }, {
 	    key: 'findClosestPoint',
-	    value: function findClosestPoint(e) {
+	    value: function findClosestPoint() {
 	      var _this3 = this;
 	
-	      e.preventDefault();
 	      var dist = void 0;
 	      var closestPoint = void 0;
 	      if (this.props.path) {
@@ -121163,7 +121275,8 @@
 	        };
 	        this.props.addLineAndDist(obj);
 	      } else {
-	        this.setState({ error: true });
+	        var error = 'You need to upload a trail first';
+	        this.props.showError(error);
 	      }
 	    }
 	  }, {
@@ -121175,7 +121288,7 @@
 	          { className: 'haversine' },
 	          _react2.default.createElement(
 	            'form',
-	            { className: 'haversine-options', onSubmit: this.findClosestPoint },
+	            { className: 'haversine-options', onSubmit: this.handleSubmit },
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
 	            _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Closest Point', type: 'submit', primary: true })
@@ -121199,40 +121312,17 @@
 	          )
 	        );
 	      } else {
-	        if (this.state.error) {
-	          return _react2.default.createElement(
-	            'section',
-	            { className: 'haversine' },
-	            _react2.default.createElement(
-	              'form',
-	              { className: 'haversine-options', onSubmit: this.findClosestPoint },
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	              _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Hiker', type: 'submit', primary: true })
-	            ),
-	            _react2.default.createElement(
-	              'section',
-	              { className: 'text' },
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'You need to upload a trail first'
-	              )
-	            )
-	          );
-	        } else {
-	          return _react2.default.createElement(
-	            'section',
-	            { className: 'haversine' },
-	            _react2.default.createElement(
-	              'form',
-	              { className: 'haversine-options', onSubmit: this.findClosestPoint },
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
-	              _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
-	              _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Hiker', type: 'submit', primary: true })
-	            )
-	          );
-	        }
+	        return _react2.default.createElement(
+	          'section',
+	          { className: 'haversine' },
+	          _react2.default.createElement(
+	            'form',
+	            { className: 'haversine-options', onSubmit: this.handleSubmit },
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Latitude', onChange: this.update('latitude'), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.TextField, { type: 'text', floatingLabelText: 'Hiker Longitude', onChange: this.update("longitude"), className: 'left-options-item-right' }),
+	            _react2.default.createElement(_materialUi.FlatButton, { label: 'Find Hiker', type: 'submit', primary: true })
+	          )
+	        );
 	      }
 	    }
 	  }]);
@@ -121243,7 +121333,7 @@
 	exports.default = Finder;
 
 /***/ }),
-/* 820 */
+/* 821 */
 /***/ (function(module, exports) {
 
 	var haversine = (function () {
@@ -121291,11 +121381,114 @@
 
 
 /***/ }),
-/* 821 */
+/* 822 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(208);
+	
+	var _error = __webpack_require__(823);
+	
+	var _error2 = _interopRequireDefault(_error);
+	
+	var _modal_actions = __webpack_require__(203);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    show: state.modals.error.show,
+	    message: state.modals.error.message
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    killError: function killError() {
+	      return dispatch((0, _modal_actions.killError)());
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_error2.default);
+
+/***/ }),
+/* 823 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _materialUi = __webpack_require__(380);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ErrorModal = function (_React$Component) {
+	  _inherits(ErrorModal, _React$Component);
+	
+	  function ErrorModal(props) {
+	    _classCallCheck(this, ErrorModal);
+	
+	    return _possibleConstructorReturn(this, (ErrorModal.__proto__ || Object.getPrototypeOf(ErrorModal)).call(this, props));
+	  }
+	
+	  _createClass(ErrorModal, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _materialUi.Dialog,
+	        { className: 'error', contentStyle: { width: 400 }, open: this.props.show, autoScrollBodyContent: true, onRequestClose: this.props.killError, title: 'Error' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.message
+	          ),
+	          _react2.default.createElement('br', null)
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'error-bottom' },
+	          _react2.default.createElement(_materialUi.FlatButton, { label: 'Close', onTouchTap: this.props.killError, primary: true })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ErrorModal;
+	}(_react2.default.Component);
+	
+	exports.default = ErrorModal;
+
+/***/ }),
+/* 824 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(8);
-	var defaultClickRejectionStrategy = __webpack_require__(822);
+	var defaultClickRejectionStrategy = __webpack_require__(825);
 	
 	var alreadyInjected = false;
 	
@@ -121317,14 +121510,14 @@
 	  alreadyInjected = true;
 	
 	  __webpack_require__(63).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(823)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(826)(shouldRejectClick)
 	  });
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 822 */
+/* 825 */
 /***/ (function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -121335,7 +121528,7 @@
 
 
 /***/ }),
-/* 823 */
+/* 826 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -121363,10 +121556,10 @@
 	var EventPluginUtils = __webpack_require__(65);
 	var EventPropagators = __webpack_require__(62);
 	var SyntheticUIEvent = __webpack_require__(96);
-	var TouchEventUtils = __webpack_require__(824);
+	var TouchEventUtils = __webpack_require__(827);
 	var ViewportMetrics = __webpack_require__(97);
 	
-	var keyOf = __webpack_require__(825);
+	var keyOf = __webpack_require__(828);
 	var topLevelTypes = EventConstants.topLevelTypes;
 	
 	var isStartish = EventPluginUtils.isStartish;
@@ -121512,7 +121705,7 @@
 
 
 /***/ }),
-/* 824 */
+/* 827 */
 /***/ (function(module, exports) {
 
 	/**
@@ -121560,7 +121753,7 @@
 
 
 /***/ }),
-/* 825 */
+/* 828 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -121597,22 +121790,6 @@
 	};
 	
 	module.exports = keyOf;
-
-/***/ }),
-/* 826 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	exports.validLatLng = function (min, num, max) {
-	  if (!isNaN(num) && num >= min && num <= max) {
-	    return true;
-	  } else {
-	    return false;
-	  };
-	};
-	// valid lat -90, 90
-	// valid lng -180, 180
 
 /***/ })
 /******/ ]);
