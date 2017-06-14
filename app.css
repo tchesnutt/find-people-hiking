@@ -2,11 +2,11 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
+small, strike, strong, sub, sup, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
+table, caption,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
@@ -17,6 +17,10 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+thead {
 	font-family: 'Josefin Sans', sans-serif;
 }
 
@@ -171,6 +175,35 @@ q:before, q:after {
 }
 
 .title {
+	cursor: pointer;
 	color: white;
 	font-size: 120%;
+}
+
+
+.welcome {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	text-align: center;
+}
+
+.welcome img {
+	display: block;
+	margin: auto;
+}
+
+.welcome p {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.welcome-bottom {
+	display: flex;
+	justify-content: space-around;
+}
+
+.upload-bottom {
+	display: flex;
+	justify-content: space-around;
 }

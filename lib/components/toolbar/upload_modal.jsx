@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dialog, RaisedButton} from 'material-ui';
+import { Dialog, FlatButton } from 'material-ui';
 import Dropzone from 'react-dropzone';
 import Pct from 'json!../../../pct-data.json'
 
@@ -17,6 +17,7 @@ class UploadModal extends React.Component {
       markers.push({position :{lat: parseFloat(el[1]), lng: parseFloat(el[2])}, id: parseFloat(el[0]), selected: false})
     ))
     this.props.addPath(markers);
+    this.props.closeUploadModal();
   }
 
   onDrop(files){
@@ -46,8 +47,10 @@ class UploadModal extends React.Component {
                 <h2 className='dropzone-text'>Drop your JSON file here!</h2>
               </Dropzone>
             </section>
-            <RaisedButton label='Use Default PCT-Trail' onTouchTap={this.handleDefaultPath} primary={true}/>
-            <RaisedButton label='Close' onTouchTap={this.props.closeUploadModal} primary={true}/>
+            <div className='upload-bottom'>
+              <FlatButton label='Use Default PCT-Trail' onTouchTap={this.handleDefaultPath} primary={true}/>
+              <FlatButton label='Close' onTouchTap={this.props.closeUploadModal} primary={true}/>
+            </div>
           </section>
         </Dialog>
       </section>

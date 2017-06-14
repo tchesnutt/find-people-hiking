@@ -4,13 +4,13 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { cyan500, cyan700, grey400, pinkA200, grey100, grey500, grey300, darkBlack, white, fullBlack } from 'material-ui';
 import ToolBar from './toolbar/app_toolbar_container';
+import Joyride from 'react-joyride';
+import Welcome from './welcome_modal/welcome_container';
 import Maps from './maps/maps_container';
 import DataTable from './datatable/data_table_container';
 import Finder from './finder/finder_container';
-import Joyride from 'react-joyride'
 
 const customTheme = getMuiTheme({
-  fontFamily: 'Roboto, sans-serif',
   palette: {
     primary1Color: cyan500,
     primary2Color: '#1A5FFF',
@@ -34,7 +34,6 @@ const customTheme = getMuiTheme({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     const steps = [
       {
         title: 'Uploading a Trail',
@@ -145,6 +144,7 @@ class App extends React.Component {
               <section className='root'>
                 <section className='top'>
                   <ToolBar/>
+                  <Welcome/>
                 </section>
                 <secton className='main-page'>
                   <Maps/>
