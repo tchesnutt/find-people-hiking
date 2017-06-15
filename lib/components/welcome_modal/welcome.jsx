@@ -1,6 +1,13 @@
 import React from 'react';
 import { Dialog, FlatButton } from 'material-ui';
 
+const welcomeStyle = {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)'
+};
+
 
 class Welcome extends React.Component {
   constructor(props){
@@ -15,7 +22,11 @@ class Welcome extends React.Component {
 
   render(){
     return(
-      <Dialog className='welcome' open={this.props.welcome} onRequestClose={this.props.killWelcome} title='Welcome to Find People Hiking'>
+      <Dialog className='welcome'
+              open={this.props.welcome}
+              onRequestClose={this.props.killWelcome}
+              title='Welcome to Find People Hiking'
+              contentStyle={ welcomeStyle }>
         <div>
           <img src='./lil_baby_hiker.jpg'/>
           <br/>

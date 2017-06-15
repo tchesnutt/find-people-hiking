@@ -42095,31 +42095,27 @@
 	          'div',
 	          { id: 'page-wrapper' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'container-fluid' },
+	            _MuiThemeProvider2.default,
+	            { muiTheme: customTheme },
 	            _react2.default.createElement(
-	              _MuiThemeProvider2.default,
-	              { muiTheme: customTheme },
+	              'section',
+	              { className: 'root' },
 	              _react2.default.createElement(
 	                'section',
-	                { className: 'root' },
+	                { className: 'top' },
+	                _react2.default.createElement(_welcome_container2.default, null),
+	                _react2.default.createElement(_app_toolbar_container2.default, null),
+	                _react2.default.createElement(_error_container2.default, null)
+	              ),
+	              _react2.default.createElement(
+	                'secton',
+	                { className: 'main-page' },
+	                _react2.default.createElement(_maps_container2.default, null),
 	                _react2.default.createElement(
 	                  'section',
-	                  { className: 'top' },
-	                  _react2.default.createElement(_welcome_container2.default, null),
-	                  _react2.default.createElement(_app_toolbar_container2.default, null),
-	                  _react2.default.createElement(_error_container2.default, null)
-	                ),
-	                _react2.default.createElement(
-	                  'secton',
-	                  { className: 'main-page' },
-	                  _react2.default.createElement(_maps_container2.default, null),
-	                  _react2.default.createElement(
-	                    'section',
-	                    { className: 'right' },
-	                    _react2.default.createElement(_finder_container2.default, null),
-	                    _react2.default.createElement(_data_table_container2.default, null)
-	                  )
+	                  { className: 'right' },
+	                  _react2.default.createElement(_finder_container2.default, null),
+	                  _react2.default.createElement(_data_table_container2.default, null)
 	                )
 	              )
 	            )
@@ -111221,6 +111217,13 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var welcomeStyle = {
+	  position: 'absolute',
+	  left: '50%',
+	  top: '50%',
+	  transform: 'translate(-50%, -50%)'
+	};
+	
 	var Welcome = function (_React$Component) {
 	  _inherits(Welcome, _React$Component);
 	
@@ -111244,7 +111247,11 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        _materialUi.Dialog,
-	        { className: 'welcome', open: this.props.welcome, onRequestClose: this.props.killWelcome, title: 'Welcome to Find People Hiking' },
+	        { className: 'welcome',
+	          open: this.props.welcome,
+	          onRequestClose: this.props.killWelcome,
+	          title: 'Welcome to Find People Hiking',
+	          contentStyle: welcomeStyle },
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -111428,8 +111435,7 @@
 	      });
 	      return _react2.default.createElement(
 	        'div',
-	        { style: { height: '100%',
-	            width: '50%' }, className: 'second-step' },
+	        { className: 'second-step' },
 	        _react2.default.createElement(GettingGoogleMap, {
 	          containerElement: _react2.default.createElement('div', { style: { height: '100%' } }),
 	          mapElement: _react2.default.createElement('div', { style: { height: '100%' } }),

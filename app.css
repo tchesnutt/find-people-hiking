@@ -50,10 +50,6 @@ q:before, q:after {
 	content: none;
 }
 
-#map {
-  height: 30px;
-}
-
 /*table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -68,7 +64,6 @@ q:before, q:after {
 }
 
 .top {
-
 }
 
 .tool-bar {
@@ -95,6 +90,13 @@ q:before, q:after {
 
 .the-table{
   height: 66%;
+}
+
+.second-step {
+	width: 50%;
+	height: 100%;
+	position: sticky;
+	top: 56px;
 }
 
 .right {
@@ -128,7 +130,7 @@ q:before, q:after {
 .haversine-options {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: baseline;
   padding-left: 10px;
   padding-right: 10px;

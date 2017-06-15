@@ -148,24 +148,22 @@ class App extends React.Component {
           callback={this.handleTourState}
           />
         <div id="page-wrapper">
-          <div className="container-fluid">
-            <MuiThemeProvider muiTheme={customTheme}>
-              <section className='root'>
-                <section className='top'>
-                  <Welcome/>
-                  <ToolBar/>
-                  <ErrorModal/>
-                </section>
-                <secton className='main-page'>
-                  <Maps/>
-                  <section className='right'>
-                    <Finder/>
-                    <DataTable/>
-                  </section>
-                </secton>
+          <MuiThemeProvider muiTheme={customTheme}>
+            <section className='root'>
+              <section className='top'>
+                <Welcome/>
+                <ToolBar/>
+                <ErrorModal/>
               </section>
-            </MuiThemeProvider>
-          </div>
+              <secton className='main-page'>
+                <Maps/>
+                <section className='right'>
+                  <Finder/>
+                  <DataTable/>
+                </section>
+              </secton>
+            </section>
+          </MuiThemeProvider>
         </div>
       </div>
     );

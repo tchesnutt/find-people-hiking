@@ -89,8 +89,7 @@ class Maps extends React.Component {
       }
     });
     return(
-      <div style={{height: `100%`,
-                   width: `50%`}} className="second-step">
+      <div className="second-step">
         <GettingGoogleMap
           containerElement={
             <div style={{ height: `100%` }} />
