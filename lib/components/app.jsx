@@ -113,7 +113,7 @@ class App extends React.Component {
   }
 
   handleTourState(e) {
-    if(e.type === 'finished'){
+    if(e.type === 'finished' || e.action === 'close'){
       this.refs.joyride.reset();
       this.props.endTour();
     }
@@ -142,7 +142,7 @@ class App extends React.Component {
           showSkipButton={true}
           showStepsProgress={true}
           stepIndex={0}
-          scrollToSteps={false}
+          scrollToSteps={true}
           steps={this.state.steps}
           type={this.state.joyrideType}
           callback={this.handleTourState}
