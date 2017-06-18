@@ -83543,7 +83543,7 @@
 	                _react2.default.createElement(
 	                  'h2',
 	                  { className: 'dropzone-text' },
-	                  'Drop your JSON file here!'
+	                  'Advanced Users: Drop your JSON file here!'
 	                )
 	              )
 	            ),

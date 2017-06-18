@@ -22,7 +22,7 @@ class UploadModal extends React.Component {
 
   onDrop(files){
     let f = files[0];
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = ((file) => (
       e => {
         let JsonObj = JSON.parse(e.target.result)
@@ -44,7 +44,7 @@ class UploadModal extends React.Component {
           <section className='interal'>
             <section className='drop'>
               <Dropzone onDrop={this.onDrop}>
-                <h2 className='dropzone-text'>Drop your JSON file here!</h2>
+                <h2 className='dropzone-text'>Advanced Users: Drop your JSON file here!</h2>
               </Dropzone>
             </section>
             <div className='upload-bottom'>

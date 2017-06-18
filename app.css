@@ -108,6 +108,7 @@ q:before, q:after {
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
+	border-bottom: solid 2px #b1b1b1;
 }
 
 .add-point {
@@ -115,16 +116,18 @@ q:before, q:after {
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
-}
-
-.text {
-  color: black;
+	border-bottom: solid 2px #b1b1b1;
 }
 
 .haversine {
   display: flex;
   flex-direction: column;
   align-items: center;
+	border-bottom: solid 2px #b1b1b1;
+}
+
+.text {
+	color: black;
 }
 
 .haversine-options {
@@ -176,6 +179,10 @@ q:before, q:after {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.drop h2 {
+	margin-top: 86px;
 }
 
 .dropzone-text {
