@@ -6,8 +6,8 @@
 
 This is a tool to find how far your loved ones are from a trail (using the Haversine formula). Trail data can only be used if in JSON. Users can CRUD points on a trail. Everything is stored in browser so refreshing will wipe all data. To test the app, the Pacific Coast Trail is provided as default. The user interface is all MaterialUI.
 <hr>
-### Implementation
 
+### Implementation
 ####  The Data Table
 In order to edit any uploaded points it helps to be able to see them, hence the need for a data table. Initially, the largest constraint I encountered was the big volume of data (users's could upload a path with tens of thousands of points). You can't just display a table that long in a browser. Thus, I needed to implement bounds to the data which would be displayed.
 
